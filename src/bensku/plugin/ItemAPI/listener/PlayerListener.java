@@ -3,9 +3,11 @@ package bensku.plugin.ItemAPI.listener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -24,8 +26,7 @@ public class PlayerListener implements Listener {
             if ( itemMeta.getDisplayName().contains("<codename>") ) { //If found tag
                 String codeName = TagTool.getTag("codename", itemMeta.getDisplayName());
                 String className = GetItemInfo.getClassName(HideTool.unhideString(codeName));
-                PlayerEvents.onHit(className, player, event.getEntity(),
-                        player.getLocation(), event.getEntity().getLocation());
+                PlayerEvents.onHit(className, event);
             }
         }
     }
@@ -38,13 +39,12 @@ public class PlayerListener implements Listener {
             if ( itemMeta.getDisplayName().contains("<codename>") ) { //If found tag
                 String codeName = TagTool.getTag("codename", itemMeta.getDisplayName());
                 String className = GetItemInfo.getClassName(HideTool.unhideString(codeName));
-                PlayerEvents.onBlockBreak(className, player, event.getBlock(),
-                        player.getLocation(), event.getBlock().getLocation());
+                PlayerEvents.onBlockBreak(className, event);
             }
         }
     }
     @EventHandler
-    public void customItemConsume(PlayerChangedWorldEvent event) {
+    public void customItemConsume(PlayerItemConsumeEvent event) {
         Player player = event.getPlayer();
         ItemStack itemStack = player.getItemInHand();
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -52,8 +52,18 @@ public class PlayerListener implements Listener {
             if ( itemMeta.getDisplayName().contains("<codename>") ) { //If found tag
                 String codeName = TagTool.getTag("codename", itemMeta.getDisplayName());
                 String className = GetItemInfo.getClassName(HideTool.unhideString(codeName));
-                PlayerEvents.onConsume(className, player, player.getLocation());
+                PlayerEvents.onConsume(className, event);
             }
+        }
+    }
+    public void customItemInteract(PlayerInteractEvent event) {
+        if ( event.getAction() == Action.LEFT_CLICK_AIR || 
+                event.getAction() == Action.LEFT_CLICK_BLOCK ) {
+            
+        }
+        if ( event.getAction() == Action.RIGHT_CLICK_AIR || 
+                event.getAction() == Action.LEFT_CLICK_BLOCK ) {
+            
         }
     }
     
