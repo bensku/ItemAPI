@@ -57,13 +57,22 @@ public class PlayerListener implements Listener {
         }
     }
     public void customItemInteract(PlayerInteractEvent event) {
-        if ( event.getAction() == Action.LEFT_CLICK_AIR || 
-                event.getAction() == Action.LEFT_CLICK_BLOCK ) {
-            
-        }
-        if ( event.getAction() == Action.RIGHT_CLICK_AIR || 
-                event.getAction() == Action.LEFT_CLICK_BLOCK ) {
-            
+        Player player = event.getPlayer();
+        ItemStack itemStack = player.getItemInHand();
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if ( itemMeta.hasDisplayName() ) {
+            if ( itemMeta.getDisplayName().contains("<codename>") ) { //If found tag
+                String codeName = TagTool.getTag("codename", itemMeta.getDisplayName());
+                String className = GetItemInfo.getClassName(HideTool.unhideString(codeName));
+                if ( event.getAction() == Action.LEFT_CLICK_AIR || 
+                        event.getAction() == Action.LEFT_CLICK_BLOCK ) {
+                    PlayerEvents.onRightClick(className, event);
+                }
+                if ( event.getAction() == Action.RIGHT_CLICK_AIR || 
+                        event.getAction() == Action.LEFT_CLICK_BLOCK ) {
+                    PlayerEvents.onLeftClick(className, event);
+                }
+            }
         }
     }
     

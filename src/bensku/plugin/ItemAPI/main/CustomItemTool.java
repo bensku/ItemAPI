@@ -42,7 +42,8 @@ public class CustomItemTool {
         
         String data = "<itemapi></itemapi>" + ChatColor.RESET;
         data = TagTool.newTag(data, "itemapi", "customname", codeName);
-        itemMeta.setDisplayName(data + GetItemInfo.getDisplayName(className));
+        String hiddenData = HideTool.hideString(data);
+        itemMeta.setDisplayName(hiddenData + GetItemInfo.getDisplayName(className));
         
         stack.setItemMeta(itemMeta);
         return stack;
