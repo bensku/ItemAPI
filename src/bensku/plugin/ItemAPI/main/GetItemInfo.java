@@ -7,18 +7,13 @@ public class GetItemInfo {
     public static String getDisplayName(String className) {
         try {
             Class<?> c = Class.forName(className);
+            Object o = c.newInstance();
             Method main = c.getDeclaredMethod("getDisplayName");
-            String ret = (String) main.invoke(null);
+            String ret = (String) main.invoke(o, null);
             return ret;
 
-        } catch (ClassNotFoundException x) {
-            x.printStackTrace();
-        } catch (NoSuchMethodException x) {
-            x.printStackTrace();
-        } catch (IllegalAccessException x) {
-            x.printStackTrace();
-        } catch (InvocationTargetException x) {
-            x.printStackTrace();
+        } catch(Exception ex){
+            ex.printStackTrace();
         }
         return null;
         
@@ -26,18 +21,12 @@ public class GetItemInfo {
     public static String getCodeName(String className) {
         try {
             Class<?> c = Class.forName(className);
+            Object o = c.newInstance();
             Method main = c.getDeclaredMethod("getCodeName");
-            String ret = (String) main.invoke(null);
+            String ret = (String) main.invoke(o, null);
             return ret;
-
-        } catch (ClassNotFoundException x) {
-            x.printStackTrace();
-        } catch (NoSuchMethodException x) {
-            x.printStackTrace();
-        } catch (IllegalAccessException x) {
-            x.printStackTrace();
-        } catch (InvocationTargetException x) {
-            x.printStackTrace();
+        } catch(Exception ex){
+            ex.printStackTrace();
         }
         return null;
         

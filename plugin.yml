@@ -1,3 +1,9 @@
-name: CustomItemLib
-main: bensku.CustomItemLib.CustomItemLib
+name: ItemAPI
+main: bensku.plugin.ItemAPI.main.ItemAPI
 version: 0.01
+commands:
+   testitem:
+      description: Gives player an ItemAPI test wand
+      usage: /testitem
+      permission: itemapi.test
+      permission-message: You don't have permission "itemapi.test"

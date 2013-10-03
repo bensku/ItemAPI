@@ -8,7 +8,7 @@ public class TagTool {
      * @return tag content
      */
     public static String getTag(String tag, String content) {
-        String pattern = "(?i)(<" + tag + ")>)(.+?)(</" + tag + ")>)"; //Regex pattern
+        String pattern = "(?i)(<" + tag + ">)(.+?)(</" + tag + ">)"; //Regex pattern
         String result = content.replaceAll(pattern, "$2");
         return result;
     }
@@ -16,7 +16,7 @@ public class TagTool {
             String tag, String content) {
         String tagData = getTag(mainTag, data);
         tagData = tagData + "<" + tag + ">" + content + "</" + tag + ">";
-        String[] dataParts = content.split("<*" + mainTag + ">");
+        String[] dataParts = content.split("<" + mainTag + ">");
         String newData = dataParts[0] + "<" + mainTag + ">" + tagData + "</" 
                 + mainTag + ">";
         return newData;
