@@ -1,6 +1,10 @@
 package bensku.plugin.ItemAPI.test;
 
 import org.bukkit.ChatColor;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import bensku.plugin.ItemAPI.main.CustomItem;
 
@@ -17,33 +21,33 @@ public class TestWand implements CustomItem {
         // TODO Auto-generated method stub
         return ChatColor.AQUA + "Staff of testing";
     }
-
+    
     @Override
-    public void onHit() {
+    public void onHit(EntityDamageByEntityEvent event) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
-    public void onBlockBreak() {
+    public void onBlockBreak(BlockBreakEvent event) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
-    public void onConsume() {
+    public void onConsume(PlayerItemConsumeEvent event) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
-    public void onRightClick() {
+    public void onRightClick(PlayerInteractEvent event) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
-    public void onLeftClick() {
+    public void onLeftClick(PlayerInteractEvent event) {
         // TODO Auto-generated method stub
         
     }
