@@ -3,7 +3,6 @@ package bensku.plugin.ItemAPI.main;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -40,8 +39,7 @@ public class CustomItemTool {
         ItemMeta itemMeta = stack.getItemMeta();
         Class<?> c = GetItemInfo.getClassName(codeName);
         
-        String data = "<itemapi></itemapi>" + ChatColor.RESET;
-        data = TagTool.newTag(data, "itemapi", "customname", codeName);
+        String data = TagTool.newTag("", "codename", codeName);
         String hiddenData = HideTool.hideString(data);
         itemMeta.setDisplayName(hiddenData + GetItemInfo.getDisplayName(c));
         

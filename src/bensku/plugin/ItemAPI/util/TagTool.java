@@ -12,19 +12,9 @@ public class TagTool {
         String result = content.replaceAll(pattern, "$2");
         return result;
     }
-    public static String newTag(String data, String mainTag,
-            String tag, String content) {
-        String tagData = getTag(mainTag, data);
-        tagData = tagData + "<" + tag + ">" + content + "</" + tag + ">";
-        String[] dataParts = content.split("<" + mainTag + ">");
-        String newData = dataParts[0] + "<" + mainTag + ">" + tagData + "</" 
-                + mainTag + ">";
+    public static String newTag(String data, String tag, String content) {
+        String newData = data + "<" + tag + ">" + content + "</" + tag + ">";
         return newData;
-        
-    }
-    public static void editTag(String newData, String tag, String content) {
-        String tagData = getTag(tag, newData);
-        tagData = tagData + "<" + tag + ">" + content + "</" + tag + ">";
         
     }
 }

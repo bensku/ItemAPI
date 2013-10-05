@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import bensku.plugin.ItemAPI.listener.PlayerListener;
 import bensku.plugin.ItemAPI.test.TestItem;
 import bensku.plugin.ItemAPI.test.TestWand;
 
@@ -28,6 +29,8 @@ public final class ItemAPI extends JavaPlugin {
 
     public void onEnable(){
         this.saveDefaultConfig(); //Save default config if it not exist
+        
+        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         
         //Tests
         getLogger().info("Running tests:");

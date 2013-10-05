@@ -1,5 +1,6 @@
 package bensku.plugin.ItemAPI.listener;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,9 +24,10 @@ public class PlayerListener implements Listener {
         ItemStack weaponItemStack = player.getItemInHand();
         ItemMeta itemMeta = weaponItemStack.getItemMeta();
         if ( itemMeta.hasDisplayName() ) {
-            if ( itemMeta.getDisplayName().contains("<codename>") ) { //If found tag
-                String codeName = TagTool.getTag("codename", itemMeta.getDisplayName());
-                Class<?> c = GetItemInfo.getClassName(HideTool.unhideString(codeName));
+            String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
+            if ( unhiddenName.contains("<codename>") ) { //If found tag
+                String codeName = TagTool.getTag("codename", unhiddenName);
+                Class<?> c = GetItemInfo.getClassName(codeName);
                 PlayerEvents.onHit(c, event);
             }
         }
@@ -36,9 +38,10 @@ public class PlayerListener implements Listener {
         ItemStack itemStack = player.getItemInHand();
         ItemMeta itemMeta = itemStack.getItemMeta();
         if ( itemMeta.hasDisplayName() ) {
-            if ( itemMeta.getDisplayName().contains("<codename>") ) { //If found tag
-                String codeName = TagTool.getTag("codename", itemMeta.getDisplayName());
-                Class<?> c = GetItemInfo.getClassName(HideTool.unhideString(codeName));
+            String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
+            if ( unhiddenName.contains("<codename>") ) { //If found tag
+                String codeName = TagTool.getTag("codename", unhiddenName);
+                Class<?> c = GetItemInfo.getClassName(codeName);
                 PlayerEvents.onBlockBreak(c, event);
             }
         }
@@ -49,24 +52,34 @@ public class PlayerListener implements Listener {
         ItemStack itemStack = player.getItemInHand();
         ItemMeta itemMeta = itemStack.getItemMeta();
         if ( itemMeta.hasDisplayName() ) {
-            if ( itemMeta.getDisplayName().contains("<codename>") ) { //If found tag
-                String codeName = TagTool.getTag("codename", itemMeta.getDisplayName());
-                Class<?> c = GetItemInfo.getClassName(HideTool.unhideString(codeName));
+            String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
+            if ( unhiddenName.contains("<codename>") ) { //If found tag
+                String codeName = TagTool.getTag("codename", unhiddenName);
+                Class<?> c = GetItemInfo.getClassName(codeName);
                 PlayerEvents.onConsume(c, event);
             }
         }
     }
+    @EventHandler
     public void customItemInteract(PlayerInteractEvent event) {
+        Bukkit.getLogger().info("Debug: Event called");
         Player player = event.getPlayer();
         ItemStack itemStack = player.getItemInHand();
         ItemMeta itemMeta = itemStack.getItemMeta();
+        Bukkit.getLogger().info("Debug: itemStack and itemMeta OK");
         if ( itemMeta.hasDisplayName() ) {
-            if ( itemMeta.getDisplayName().contains("<codename>") ) { //If found tag
-                String codeName = TagTool.getTag("codename", itemMeta.getDisplayName());
-                Class<?> c = GetItemInfo.getClassName(HideTool.unhideString(codeName));
+            Bukkit.getLogger().info("Debug: Found custom name");
+            String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
+            Bukkit.getLogger().info("Debug: Unhidden whole name is " + unhiddenName);
+            if ( unhiddenName.contains("<codename>") ) { //If found tag
+                Bukkit.getLogger().info("Debug: Found tag <codename>");
+                String codeName = TagTool.getTag("codename", unhiddenName);
+                Bukkit.getLogger().info("Debug: codeName is " + codeName);
+                Class<?> c = GetItemInfo.getClassName(codeName);
                 if ( event.getAction() == Action.LEFT_CLICK_AIR || 
                         event.getAction() == Action.LEFT_CLICK_BLOCK ) {
                     PlayerEvents.onRightClick(c, event);
+                    Bukkit.getLogger().info("Debug: Reflection succeful");
                 }
                 if ( event.getAction() == Action.RIGHT_CLICK_AIR || 
                         event.getAction() == Action.LEFT_CLICK_BLOCK ) {

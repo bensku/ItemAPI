@@ -1,5 +1,6 @@
 package bensku.plugin.ItemAPI.test;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -42,7 +43,8 @@ public class TestWand implements CustomItem {
 
     @Override
     public void onRightClick(PlayerInteractEvent event) {
-        // TODO Auto-generated method stub
+        event.getPlayer().sendMessage("You used Satff of testing!");
+        Bukkit.getLogger().info("Debug: Runned onRightClick in TestWand.class");
         
     }
 
