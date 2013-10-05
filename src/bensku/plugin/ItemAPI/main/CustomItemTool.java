@@ -18,15 +18,15 @@ import bensku.plugin.ItemAPI.util.TagTool;
  *
  */
 public class CustomItemTool {
-    public static Map<String,String> itemClassMap = new HashMap<String,String>();
+    public static Map<String,Class<?>> itemClassMap = new HashMap<String,Class<?>>();
     
     /**
      * Registers custom item
      * @param className
      */
-    public static void addCustomItem(String className) {
-        String codeName = GetItemInfo.getCodeName(className);
-        itemClassMap.put(codeName, className);
+    public static void addCustomItem(Class<?> c) {
+        String codeName = GetItemInfo.getCodeName(c);
+        itemClassMap.put(codeName, c);
         
     }
     /**
@@ -38,12 +38,12 @@ public class CustomItemTool {
             int count) {
         ItemStack stack = new ItemStack(material, count);
         ItemMeta itemMeta = stack.getItemMeta();
-        String className = GetItemInfo.getClassName(codeName);
+        Class<?> c = GetItemInfo.getClassName(codeName);
         
         String data = "<itemapi></itemapi>" + ChatColor.RESET;
         data = TagTool.newTag(data, "itemapi", "customname", codeName);
         String hiddenData = HideTool.hideString(data);
-        itemMeta.setDisplayName(hiddenData + GetItemInfo.getDisplayName(className));
+        itemMeta.setDisplayName(hiddenData + GetItemInfo.getDisplayName(c));
         
         stack.setItemMeta(itemMeta);
         return stack;

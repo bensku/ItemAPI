@@ -25,8 +25,8 @@ public class PlayerListener implements Listener {
         if ( itemMeta.hasDisplayName() ) {
             if ( itemMeta.getDisplayName().contains("<codename>") ) { //If found tag
                 String codeName = TagTool.getTag("codename", itemMeta.getDisplayName());
-                String className = GetItemInfo.getClassName(HideTool.unhideString(codeName));
-                PlayerEvents.onHit(className, event);
+                Class<?> c = GetItemInfo.getClassName(HideTool.unhideString(codeName));
+                PlayerEvents.onHit(c, event);
             }
         }
     }
@@ -38,8 +38,8 @@ public class PlayerListener implements Listener {
         if ( itemMeta.hasDisplayName() ) {
             if ( itemMeta.getDisplayName().contains("<codename>") ) { //If found tag
                 String codeName = TagTool.getTag("codename", itemMeta.getDisplayName());
-                String className = GetItemInfo.getClassName(HideTool.unhideString(codeName));
-                PlayerEvents.onBlockBreak(className, event);
+                Class<?> c = GetItemInfo.getClassName(HideTool.unhideString(codeName));
+                PlayerEvents.onBlockBreak(c, event);
             }
         }
     }
@@ -51,8 +51,8 @@ public class PlayerListener implements Listener {
         if ( itemMeta.hasDisplayName() ) {
             if ( itemMeta.getDisplayName().contains("<codename>") ) { //If found tag
                 String codeName = TagTool.getTag("codename", itemMeta.getDisplayName());
-                String className = GetItemInfo.getClassName(HideTool.unhideString(codeName));
-                PlayerEvents.onConsume(className, event);
+                Class<?> c = GetItemInfo.getClassName(HideTool.unhideString(codeName));
+                PlayerEvents.onConsume(c, event);
             }
         }
     }
@@ -63,14 +63,14 @@ public class PlayerListener implements Listener {
         if ( itemMeta.hasDisplayName() ) {
             if ( itemMeta.getDisplayName().contains("<codename>") ) { //If found tag
                 String codeName = TagTool.getTag("codename", itemMeta.getDisplayName());
-                String className = GetItemInfo.getClassName(HideTool.unhideString(codeName));
+                Class<?> c = GetItemInfo.getClassName(HideTool.unhideString(codeName));
                 if ( event.getAction() == Action.LEFT_CLICK_AIR || 
                         event.getAction() == Action.LEFT_CLICK_BLOCK ) {
-                    PlayerEvents.onRightClick(className, event);
+                    PlayerEvents.onRightClick(c, event);
                 }
                 if ( event.getAction() == Action.RIGHT_CLICK_AIR || 
                         event.getAction() == Action.LEFT_CLICK_BLOCK ) {
-                    PlayerEvents.onLeftClick(className, event);
+                    PlayerEvents.onLeftClick(c, event);
                 }
             }
         }

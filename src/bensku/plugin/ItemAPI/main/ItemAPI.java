@@ -7,6 +7,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import bensku.plugin.ItemAPI.test.TestItem;
+import bensku.plugin.ItemAPI.test.TestWand;
+
 public final class ItemAPI extends JavaPlugin {
     @EventHandler
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -28,9 +31,9 @@ public final class ItemAPI extends JavaPlugin {
         
         //Tests
         getLogger().info("Running tests:");
-        getLogger().info(GetItemInfo.getDisplayName("bensku.plugin.ItemAPI.test.TestItem"));
-        getLogger().info(GetItemInfo.getCodeName("bensku.plugin.ItemAPI.test.TestItem"));
-        CustomItemTool.addCustomItem("bensku.plugin.ItemAPI.test.TestWand");
+        getLogger().info(GetItemInfo.getDisplayName(TestItem.class));
+        getLogger().info(GetItemInfo.getCodeName(TestItem.class));
+        CustomItemTool.addCustomItem(TestWand.class);
         getLogger().info("Wand of testing: OK!");
         getLogger().info("Done!");
     }
