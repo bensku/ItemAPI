@@ -47,7 +47,7 @@ public class PlayerEvents {
     }
     public static String onRightClick(Class<?> c, PlayerInteractEvent event) {
         try {
-            Bukkit.getLogger().info("Debug: Event working, started reflection state");
+            //Bukkit.getLogger().info("Debug: Event working, started reflection state");
             Object o = c.newInstance();
             Method main = c.getDeclaredMethod("onRightClick", PlayerInteractEvent.class);
             String ret = (String) main.invoke(o, event);

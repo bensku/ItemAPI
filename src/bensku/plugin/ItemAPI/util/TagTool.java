@@ -1,5 +1,7 @@
 package bensku.plugin.ItemAPI.util;
 
+import org.jsoup.Jsoup;
+
 public class TagTool {
     /**
      * Returns tag content
@@ -8,8 +10,7 @@ public class TagTool {
      * @return tag content
      */
     public static String getTag(String tag, String content) {
-        String pattern = "(?i)(<" + tag + ">)(.+?)(</" + tag + ">)"; //Regex pattern
-        String result = content.replaceAll(pattern, "$2");
+        String result = Jsoup.parse(content).select(tag).first().text();
         return result;
     }
     public static String newTag(String data, String tag, String content) {

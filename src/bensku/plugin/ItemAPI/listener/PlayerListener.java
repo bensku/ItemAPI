@@ -72,18 +72,21 @@ public class PlayerListener implements Listener {
             String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
             Bukkit.getLogger().info("Debug: Unhidden whole name is " + unhiddenName);
             if ( unhiddenName.contains("<codename>") ) { //If found tag
-                Bukkit.getLogger().info("Debug: Found tag <codename>");
+                //Bukkit.getLogger().info("Debug: Found tag <codename>");
                 String codeName = TagTool.getTag("codename", unhiddenName);
                 Bukkit.getLogger().info("Debug: codeName is " + codeName);
                 Class<?> c = GetItemInfo.getClassName(codeName);
+                //Bukkit.getLogger().info("Debug: Action is " + event.getAction());
+                //Bukkit.getLogger().info("Debug: Class is " + c.getName());
                 if ( event.getAction() == Action.LEFT_CLICK_AIR || 
                         event.getAction() == Action.LEFT_CLICK_BLOCK ) {
-                    PlayerEvents.onRightClick(c, event);
-                    Bukkit.getLogger().info("Debug: Reflection succeful");
-                }
-                if ( event.getAction() == Action.RIGHT_CLICK_AIR || 
-                        event.getAction() == Action.LEFT_CLICK_BLOCK ) {
                     PlayerEvents.onLeftClick(c, event);
+                    //Bukkit.getLogger().info("Debug: Reflection succeful");
+                }
+                else if ( event.getAction() == Action.RIGHT_CLICK_AIR || 
+                        event.getAction() == Action.RIGHT_CLICK_BLOCK ) {
+                    //Bukkit.getLogger().info("Debug: Running PlayerEvents.onRightClick");
+                    PlayerEvents.onRightClick(c, event);
                 }
             }
         }
