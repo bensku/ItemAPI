@@ -1,6 +1,6 @@
 package bensku.plugin.ItemAPI.listener;
 
-import org.bukkit.Bukkit;
+//import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -62,19 +62,19 @@ public class PlayerListener implements Listener {
     }
     @EventHandler
     public void customItemInteract(PlayerInteractEvent event) {
-        Bukkit.getLogger().info("Debug: Event called");
+        //Bukkit.getLogger().info("Debug: Event called");
         Player player = event.getPlayer();
         ItemStack itemStack = player.getItemInHand();
         ItemMeta itemMeta = itemStack.getItemMeta();
-        Bukkit.getLogger().info("Debug: itemStack and itemMeta OK");
+        //Bukkit.getLogger().info("Debug: itemStack and itemMeta OK");
         if ( itemMeta.hasDisplayName() ) {
-            Bukkit.getLogger().info("Debug: Found custom name");
+            //Bukkit.getLogger().info("Debug: Found custom name");
             String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
-            Bukkit.getLogger().info("Debug: Unhidden whole name is " + unhiddenName);
+            //Bukkit.getLogger().info("Debug: Unhidden whole name is " + unhiddenName);
             if ( unhiddenName.contains("<codename>") ) { //If found tag
                 //Bukkit.getLogger().info("Debug: Found tag <codename>");
                 String codeName = TagTool.getTag("codename", unhiddenName);
-                Bukkit.getLogger().info("Debug: codeName is " + codeName);
+                //Bukkit.getLogger().info("Debug: codeName is " + codeName);
                 Class<?> c = GetItemInfo.getClassName(codeName);
                 //Bukkit.getLogger().info("Debug: Action is " + event.getAction());
                 //Bukkit.getLogger().info("Debug: Class is " + c.getName());
