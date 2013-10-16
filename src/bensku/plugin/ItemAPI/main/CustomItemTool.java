@@ -1,5 +1,6 @@
 package bensku.plugin.ItemAPI.main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,6 +71,13 @@ public class CustomItemTool {
         itemMeta.setDisplayName(HideTool.hideString(TagTool.
                 newTag(data, tag, content)));
         
+        ItemStack finalStack = stack;
+        finalStack.setItemMeta(itemMeta);
+        return finalStack;
+    }
+    public static ItemStack setLore(ItemStack stack, ArrayList<String> lore) {
+        ItemMeta itemMeta = stack.getItemMeta();
+        itemMeta.setLore(lore);
         ItemStack finalStack = stack;
         finalStack.setItemMeta(itemMeta);
         return finalStack;
