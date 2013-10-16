@@ -41,13 +41,37 @@ public class CustomItemTool {
         Class<?> c = GetItemInfo.getClassName(codeName);
         
         String data = TagTool.newTag("", "codename", codeName);
-        Bukkit.getLogger().info("Debug: Data is " + data);
+        //Bukkit.getLogger().info("Debug: Data is " + data);
         String hiddenData = HideTool.hideString(data);
-        Bukkit.getLogger().info("Debug: Hidden data is " + hiddenData);
+        //Bukkit.getLogger().info("Debug: Hidden data is " + hiddenData);
         itemMeta.setDisplayName(hiddenData + GetItemInfo.getDisplayName(c));
         
         stack.setItemMeta(itemMeta);
         return stack;
         
+    }
+    public static ItemStack getNamedCustomItemStack(String codeName, 
+            Material material, int count, String displayName) {
+        ItemStack stack = new ItemStack(material, count);
+        ItemMeta itemMeta = stack.getItemMeta();
+        //Class<?> c = GetItemInfo.getClassName(codeName);
+        
+        String data = TagTool.newTag("", "codename", codeName);
+        String hiddenData = HideTool.hideString(data);
+        itemMeta.setDisplayName(hiddenData + displayName);
+        
+        stack.setItemMeta(itemMeta);
+        return stack;
+        
+    }
+    public static ItemStack addCustomData(ItemStack stack, String tag, String data) {
+        ItemMeta itemMeta = stack.getItemMeta();
+        String content = HideTool.unhideString(itemMeta.getDisplayName());
+        itemMeta.setDisplayName(HideTool.hideString(TagTool.
+                newTag(data, tag, content)));
+        
+        ItemStack finalStack = stack;
+        finalStack.setItemMeta(itemMeta);
+        return finalStack;
     }
 }
