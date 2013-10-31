@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Bukkit;
+//import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -41,7 +41,8 @@ public class CustomItemTool {
         ItemMeta itemMeta = stack.getItemMeta();
         Class<?> c = GetItemInfo.getClassName(codeName);
         
-        String data = TagTool.newTag("", "codename", codeName);
+        String data = TagTool.newTag("", 
+                "codename", codeName);
         //Bukkit.getLogger().info("Debug: Data is " + data);
         String hiddenData = HideTool.hideString(data);
         //Bukkit.getLogger().info("Debug: Hidden data is " + hiddenData);
