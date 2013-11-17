@@ -66,9 +66,9 @@ public class CustomItemTool {
         return stack;
         
     }
-    public static ItemStack addCustomData(ItemStack stack, String tag, String data) {
+    public static ItemStack addCustomData(ItemStack stack, String tag, String content) {
         ItemMeta itemMeta = stack.getItemMeta();
-        String content = HideTool.unhideString(itemMeta.getDisplayName());
+        String data = itemMeta.getDisplayName();
         itemMeta.setDisplayName(HideTool.hideString(TagTool.
                 newTag(data, tag, content)));
         
