@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 //import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -69,8 +70,10 @@ public class CustomItemTool {
     public static ItemStack addCustomData(ItemStack stack, String tag, String content) {
         ItemMeta itemMeta = stack.getItemMeta();
         String data = itemMeta.getDisplayName();
-        itemMeta.setDisplayName(HideTool.hideString(TagTool.
-                newTag(data, tag, content)));
+        itemMeta.setDisplayName(data + HideTool.hideString(TagTool.
+                newTag("", tag, content)));
+        
+        Bukkit.getLogger().info("Debug: Display name is " + itemMeta.getDisplayName());
         
         ItemStack finalStack = stack;
         finalStack.setItemMeta(itemMeta);
