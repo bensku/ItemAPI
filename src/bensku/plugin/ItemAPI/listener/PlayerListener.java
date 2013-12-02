@@ -21,15 +21,13 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void customItemAttack(EntityDamageByEntityEvent event) {
         Player player =  (Player) event.getDamager();
-        ItemStack itemStack = player.getItemInHand();
-        ItemMeta itemMeta = null; //Need to initialized
+        ItemStack itemStack = null; //Needed to initialize
         try {
-            itemMeta = itemStack.getItemMeta();
+           itemStack = player.getItemInHand();
         } catch (NullPointerException e) {
-            //If stack.getItemMeta is null, there isn't any item in hand
-            //This is event to catch custom item interacts, so cancel it!
             return;
         }
+        ItemMeta itemMeta = itemStack.getItemMeta();
         if ( itemMeta.hasDisplayName() ) {
             String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
             if ( unhiddenName.contains("<codename>") ) { //If found tag
@@ -42,16 +40,13 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void customItemBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
-        ItemStack itemStack = player.getItemInHand();
-        ItemMeta itemMeta = null; //Need to initialized
+        ItemStack itemStack = null; //Needed to initialize
         try {
-            itemMeta = itemStack.getItemMeta();
+           itemStack = player.getItemInHand();
         } catch (NullPointerException e) {
-            //If stack.getItemMeta is null, there isn't any item in hand
-            //This is event to catch custom item interacts, so cancel it!
             return;
         }
-        
+        ItemMeta itemMeta = itemStack.getItemMeta();
         if ( itemMeta.hasDisplayName() ) {
             String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
             if ( unhiddenName.contains("<codename>") ) { //If found tag
@@ -79,15 +74,13 @@ public class PlayerListener implements Listener {
     public void customItemInteract(PlayerInteractEvent event) {
         //Bukkit.getLogger().info("Debug: Event called");
         Player player = event.getPlayer();
-        ItemStack itemStack = player.getItemInHand();
-        ItemMeta itemMeta = null; //Need to initialized
+        ItemStack itemStack = null; //Needed to initialize
         try {
-            itemMeta = itemStack.getItemMeta();
+           itemStack = player.getItemInHand();
         } catch (NullPointerException e) {
-            //If stack.getItemMeta is null, there isn't any item in hand
-            //This is event to catch custom item interacts, so cancel it!
             return;
         }
+        ItemMeta itemMeta = itemStack.getItemMeta();
         //Bukkit.getLogger().info("Debug: itemStack and itemMeta OK");
         
         if ( itemMeta.hasDisplayName() ) {
