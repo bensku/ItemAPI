@@ -27,7 +27,15 @@ public class PlayerListener implements Listener {
         } catch (NullPointerException e) {
             return;
         }
-        ItemMeta itemMeta = itemStack.getItemMeta();
+        ItemMeta itemMeta = null;
+        try {
+            itemMeta = itemStack.getItemMeta();
+            String exception = itemMeta.toString();
+            //It throws exception if itemMeta = null
+        } catch (NullPointerException e) {
+            return;
+        }
+        
         if ( itemMeta.hasDisplayName() ) {
             String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
             if ( unhiddenName.contains("<codename>") ) { //If found tag
@@ -46,7 +54,15 @@ public class PlayerListener implements Listener {
         } catch (NullPointerException e) {
             return;
         }
-        ItemMeta itemMeta = itemStack.getItemMeta();
+        ItemMeta itemMeta = null;
+        try {
+            itemMeta = itemStack.getItemMeta();
+            String exception = itemMeta.toString();
+            //It throws exception if itemMeta = null
+        } catch (NullPointerException e) {
+            return;
+        }
+        
         if ( itemMeta.hasDisplayName() ) {
             String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
             if ( unhiddenName.contains("<codename>") ) { //If found tag
@@ -80,7 +96,15 @@ public class PlayerListener implements Listener {
         } catch (NullPointerException e) {
             return;
         }
-        ItemMeta itemMeta = itemStack.getItemMeta();
+        //Bukkit.getLogger().info("Debug: ItemStack is " + itemStack.toString());
+        ItemMeta itemMeta = null;
+        try {
+            itemMeta = itemStack.getItemMeta();
+            String exception = itemMeta.toString();
+            //It throws exception if itemMeta = null
+        } catch (NullPointerException e) {
+            return;
+        }
         //Bukkit.getLogger().info("Debug: itemStack and itemMeta OK");
         
         if ( itemMeta.hasDisplayName() ) {
