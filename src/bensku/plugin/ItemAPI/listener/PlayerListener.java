@@ -40,7 +40,7 @@ public class PlayerListener implements Listener {
             String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
             if ( unhiddenName.contains("<codename>") ) { //If found tag
                 String codeName = TagTool.getTag("codename", unhiddenName);
-                Class<?> c = GetItemInfo.getClassName(codeName);
+                Class<?> c = GetItemInfo.getClass(codeName);
                 PlayerEvents.onHit(c, event);
             }
         }
@@ -67,7 +67,7 @@ public class PlayerListener implements Listener {
             String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
             if ( unhiddenName.contains("<codename>") ) { //If found tag
                 String codeName = TagTool.getTag("codename", unhiddenName);
-                Class<?> c = GetItemInfo.getClassName(codeName);
+                Class<?> c = GetItemInfo.getClass(codeName);
                 PlayerEvents.onBlockBreak(c, event);
             }
         }
@@ -81,7 +81,7 @@ public class PlayerListener implements Listener {
             String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
             if ( unhiddenName.contains("<codename>") ) { //If found tag
                 String codeName = TagTool.getTag("codename", unhiddenName);
-                Class<?> c = GetItemInfo.getClassName(codeName);
+                Class<?> c = GetItemInfo.getClass(codeName);
                 PlayerEvents.onConsume(c, event);
             }
         }
@@ -115,7 +115,7 @@ public class PlayerListener implements Listener {
                 //Bukkit.getLogger().info("Debug: Found tag <codename>");
                 String codeName = TagTool.getTag("codename", unhiddenName);
                 //Bukkit.getLogger().info("Debug: codeName is " + codeName);
-                Class<?> c = GetItemInfo.getClassName(codeName);
+                Class<?> c = GetItemInfo.getClass(codeName);
                 //Bukkit.getLogger().info("Debug: Action is " + event.getAction());
                 //Bukkit.getLogger().info("Debug: Class is " + c.getName());
                 if ( event.getAction() == Action.LEFT_CLICK_AIR || 

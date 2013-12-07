@@ -40,7 +40,7 @@ public class CustomItemTool {
             int count) {
         ItemStack stack = new ItemStack(material, count);
         ItemMeta itemMeta = stack.getItemMeta();
-        Class<?> c = GetItemInfo.getClassName(codeName);
+        Class<?> c = GetItemInfo.getClass(codeName);
         
         String data = TagTool.newTag("", 
                 "codename", codeName);
@@ -53,6 +53,14 @@ public class CustomItemTool {
         return stack;
         
     }
+    /**
+     * Returns custom itemStack with setted name
+     * @param codeName
+     * @param material
+     * @param count
+     * @param displayName
+     * @return
+     */
     public static ItemStack getNamedCustomItemStack(String codeName, 
             Material material, int count, String displayName) {
         ItemStack stack = new ItemStack(material, count);
@@ -67,6 +75,13 @@ public class CustomItemTool {
         return stack;
         
     }
+    /**
+     * Adds custom data. Not working!
+     * @param stack
+     * @param tag
+     * @param content
+     * @return
+     */
     public static ItemStack addCustomData(ItemStack stack, String tag, String content) {
         ItemMeta itemMeta = stack.getItemMeta();
         String data = itemMeta.getDisplayName();
@@ -79,11 +94,44 @@ public class CustomItemTool {
         finalStack.setItemMeta(itemMeta);
         return finalStack;
     }
+    /**
+     * Sets lore of itemStack
+     * @param stack
+     * @param lore
+     * @return new itemStack with lore
+     */
     public static ItemStack setLore(ItemStack stack, ArrayList<String> lore) {
         ItemMeta itemMeta = stack.getItemMeta();
         itemMeta.setLore(lore);
         ItemStack finalStack = stack;
         finalStack.setItemMeta(itemMeta);
         return finalStack;
+    }
+    /**
+     * Returns is itemStack custom
+     * @param itemStack
+     * @return boolean
+     */
+    public static boolean isCustomStack(ItemStack itemStack) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if ( itemMeta.getDisplayName().contains(HideTool.hideString("<codename>")) ) {
+            return true; //If contains custom name and <codename>
+        }
+        return false;
+    }
+    /**
+     * Returns codeName of itemStack
+     * @param itemStack
+     * @return
+     */
+    public static String getCodeName(ItemStack itemStack) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        String unhiddenName = HideTool.unhideString(itemMeta.getDisplayName());
+        String codeName = null;
+        
+        if ( unhiddenName.contains("<codename>") ) { //If found tag
+            codeName = TagTool.getTag("codename", unhiddenName);
+        }
+        return codeName;
     }
 }
