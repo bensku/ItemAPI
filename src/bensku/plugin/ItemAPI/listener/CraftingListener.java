@@ -1,35 +1,45 @@
 package bensku.plugin.ItemAPI.listener;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
+//import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
 
+import bensku.plugin.ItemAPI.exception.NullItemException;
 import bensku.plugin.ItemAPI.main.CustomItemTool;
 import bensku.plugin.ItemAPI.main.GetItemInfo;
 
 public class CraftingListener implements Listener {
     @EventHandler
-    public void customItemCraft(CraftItemEvent event) {
-        ShapedRecipe recipe = (ShapedRecipe) event.getRecipe();
-        Map<Character, ItemStack> items = recipe.getIngredientMap();
+    public void customItemCraft(PrepareItemCraftEvent event) {
+        ItemStack[] items = event.getInventory().getContents();
         
-        for (Entry<Character, ItemStack> entry : items.entrySet()) {
-            //Character key = entry.getKey();
-            ItemStack itemStack = entry.getValue();
-            if ( CustomItemTool.isCustomStack(itemStack) ) {
-                if ( GetItemInfo.getAllowCrafting(
-                        CustomItemTool.getCodeName(itemStack))) {
-                    //If crafting is allowed:
-                    return;
-                } else {
-                    event.setCancelled(true);
-                    return;
+        //Bukkit.getLogger().info("Debug: items is " + items.toString());
+        
+        for (int i = 0; i < items.length; i++) {
+            ItemStack itemStack = items[i];
+            try {
+                //Bukkit.getLogger().info("Debug: Try started");
+                if ( CustomItemTool.isCustomStack(itemStack) ) {
+                    //Bukkit.getLogger().info("Debug: Stack is custom item");
+                    if ( GetItemInfo.getAllowCrafting(
+                            CustomItemTool.getCodeName(itemStack))) {
+                        /*Bukkit.getLogger().info("Debug: Crafting is allowed");
+                        Bukkit.getLogger().info("Debug: codeName is " +
+                                CustomItemTool.getCodeName(itemStack)); */
+                        //If crafting is allowed:
+                        continue;
+                    } else {
+                        //Bukkit.getLogger().info("Debug: Crafting is disallowed");
+                        event.getInventory().setResult(null);
+                        return;
+                    }
                 }
+            } catch (NullItemException e) {
+                //Bukkit.getLogger().info("Debug: Catched NullItemException");
+                //If itemStack is null, there isn't any item, so...
+                continue;
             }
         }
     }

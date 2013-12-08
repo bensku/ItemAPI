@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Bukkit;
 //import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import bensku.plugin.ItemAPI.exception.NullItemException;
 import bensku.plugin.ItemAPI.util.HideTool;
 import bensku.plugin.ItemAPI.util.TagTool;
 
@@ -88,7 +88,7 @@ public class CustomItemTool {
         itemMeta.setDisplayName(data + HideTool.hideString(TagTool.
                 newTag("", tag, content)));
         
-        Bukkit.getLogger().info("Debug: Display name is " + itemMeta.getDisplayName());
+        //Bukkit.getLogger().info("Debug: Display name is " + itemMeta.getDisplayName());
         
         ItemStack finalStack = stack;
         finalStack.setItemMeta(itemMeta);
@@ -111,11 +111,22 @@ public class CustomItemTool {
      * Returns is itemStack custom
      * @param itemStack
      * @return boolean
+     * @throws NullItemException
      */
-    public static boolean isCustomStack(ItemStack itemStack) {
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        if ( itemMeta.getDisplayName().contains(HideTool.hideString("<codename>")) ) {
-            return true; //If contains custom name and <codename>
+    public static boolean isCustomStack(ItemStack itemStack) throws NullItemException {
+        try {
+            //Bukkit.getLogger().info("Debug: itemStack is " + itemStack.toString());
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            /*Bukkit.getLogger().info("Debug: Is stack custom item? " + 
+                    itemMeta.getDisplayName().
+                    contains(HideTool.hideString("<codename>").toString()));*/
+            if ( itemMeta.getDisplayName().contains(HideTool.hideString("<codename>")) ) {
+                return true; //If contains custom name and <codename>
+            }
+        } catch (NullPointerException e) {
+            //Bukkit.getLogger().info("Debug: Throwing NullIntemException");
+            //e.printStackTrace();
+            throw new NullItemException("");
         }
         return false;
     }

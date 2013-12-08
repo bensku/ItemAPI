@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import bensku.plugin.ItemAPI.listener.CraftingListener;
 import bensku.plugin.ItemAPI.listener.PlayerListener;
 import bensku.plugin.ItemAPI.test.NameWand;
 import bensku.plugin.ItemAPI.test.TestItem;
@@ -45,6 +46,7 @@ public final class ItemAPI extends JavaPlugin {
         this.saveDefaultConfig(); //Save default config if it not exist
         
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        getServer().getPluginManager().registerEvents(new CraftingListener(), this);
         
         //Tests
         getLogger().info("Running tests:");
