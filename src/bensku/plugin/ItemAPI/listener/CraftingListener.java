@@ -17,8 +17,10 @@ public class CraftingListener implements Listener {
         
         //Bukkit.getLogger().info("Debug: items is " + items.toString());
         
-        for (int i = 0; i < items.length; i++) {
+        for (int i = 1; i < items.length; i++) {
+            //i starts from 1 because 0 is crafting result (and maybe custom item)
             ItemStack itemStack = items[i];
+            //Bukkit.getLogger().info("Debug: items is" +  items.toString());
             try {
                 //Bukkit.getLogger().info("Debug: Try started");
                 if ( CustomItemTool.isCustomStack(itemStack) ) {
