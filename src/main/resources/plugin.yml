@@ -1,0 +1,14 @@
+name: ItemAPI
+main: bensku.plugin.ItemAPI.main.ItemAPI
+version: 2.00
+commands:
+   testitem:
+      description: Gives ItemAPI test wand
+      usage: /testitem
+      permission: itemapi.test
+      permission-message: You don't have permission "itemapi.test"
+   nameditem:
+      description: Gives named ItemAPI test wand
+      usage: /nameditem
+      permission: itemapi.test
+      permission-message: You don't have permission "itemapi.test"
