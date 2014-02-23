@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 
 import bensku.plugin.ItemAPI.api.CustomStack;
+import bensku.plugin.ItemAPI.api.ItemAPIMeta;
 import bensku.plugin.ItemAPI.event.EventReflector;
 import bensku.plugin.ItemAPI.exception.ItemNotFoundException;
 import bensku.plugin.ItemAPI.exception.NullItemException;
@@ -41,8 +42,8 @@ public class CustomItemListener implements Listener {
 
         if ( !(attacker instanceof LivingEntity) ) {
             //If attacker isn't LivingEntity, it can't hold item
-            List<MetadataValue> metaData = attacker.getMetadata("ItemAPI:CodeName");
-            codeName = metaData.get(0).asString();
+            List<MetadataValue> metaData = attacker.getMetadata("ItemAPIData");
+            codeName = metaData.get(ItemAPIMeta.LAUNCHER_CODENAME).asString();
             
             //So we try to find item which launched it
             

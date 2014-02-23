@@ -1,6 +1,15 @@
 package bensku.plugin.ItemAPI.projectile;
 
+import java.util.List;
+
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+
 import bensku.plugin.ItemAPI.api.CustomItem;
+import bensku.plugin.ItemAPI.api.ItemAPIMeta;
+import bensku.plugin.ItemAPI.main.ItemAPI;
 
 /**
  * Basic projectile object
@@ -9,19 +18,19 @@ import bensku.plugin.ItemAPI.api.CustomItem;
  *
  */
 public class BasicProjectile {
-    private Class<?> type;
+    private Class<Entity> type;
     private Class<?> launcherItem;
     
-    public BasicProjectile(Class<?> type) {
+    public BasicProjectile(Class<Entity> type) {
         this.setType(type);
     }
     
-    public BasicProjectile(Class<?> type, Class<?> item) {
+    public BasicProjectile(Class<Entity> type, Class<?> item) {
         this.setType(type);
         this.setLaucherItem(item);
     }
     
-    public BasicProjectile(Class<?> type,CustomItem item) {
+    public BasicProjectile(Class<Entity> type,CustomItem item) {
         this.setType(type);
         this.setLauncherItem(item);
     }
@@ -30,7 +39,7 @@ public class BasicProjectile {
      * Sets type of projectile
      * @param type
      */
-    public void setType(Class<?> type){
+    public void setType(Class<Entity> type){
         this.type = type;
     }
     
@@ -38,7 +47,7 @@ public class BasicProjectile {
      * 
      * @return type of projectile
      */
-    public Class<?> getType() {
+    public Class<Entity> getType() {
         return this.type;
     }
     
@@ -51,7 +60,7 @@ public class BasicProjectile {
     }
     
     /**
-     * Sets laucher CustomItem using it as CustomItem
+     * Sets launcher CustomItem using it as CustomItem
      * @param item
      */
     public void setLauncherItem(CustomItem item) {
@@ -64,5 +73,29 @@ public class BasicProjectile {
      */
     public Class<?> getLauncherItem() {
         return this.launcherItem;
+    }
+    
+    public void spawn(Location location) {
+        Entity entity = location.getWorld().spawn(location, this.getType());
+        List<MetadataValue> metadata = entity.getMetadata("ItemAPI");
+        
+        CustomItem item = null;
+        try {
+            item = (CustomItem) this.getLauncherItem().newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        
+        String codeName = null;
+        try {
+            codeName = item.getCodeName();
+        } catch (NullPointerException e) {
+            //There isn't any CustomItem
+            return;
+        }
+        
+        //Set the metadata
+        metadata.set(ItemAPIMeta.LAUNCHER_CODENAME, 
+                new FixedMetadataValue(new ItemAPI(), codeName));
     }
 }
