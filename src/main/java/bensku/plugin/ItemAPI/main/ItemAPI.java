@@ -9,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import bensku.plugin.ItemAPI.listener.ClickEventListener;
 import bensku.plugin.ItemAPI.listener.CraftingListener;
 import bensku.plugin.ItemAPI.listener.CustomItemListener;
 import bensku.plugin.ItemAPI.listener.LegacyPlayerListener;
@@ -62,7 +61,6 @@ public final class ItemAPI extends JavaPlugin {
         
         getServer().getPluginManager().registerEvents(new LegacyPlayerListener(), this);
         getServer().getPluginManager().registerEvents(new CraftingListener(), this);
-        getServer().getPluginManager().registerEvents(new ClickEventListener(), this);
         getServer().getPluginManager().registerEvents(new CustomItemListener(), this);
         
         //Tests

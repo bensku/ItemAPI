@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.bukkit.event.Event;
+
 import bensku.plugin.ItemAPI.api.CustomItem;
 import bensku.plugin.ItemAPI.exception.EventNotHandledException;
 import bensku.plugin.ItemAPI.exception.ItemNotFoundException;
@@ -20,7 +22,7 @@ import bensku.plugin.ItemAPI.main.ItemRegistry;
 public class EventReflector {
     private CustomItem item;
     private Class<?> c;
-    private Object event; //Support multiple events using Object
+    private Event event; //Support multiple events using Event
     private Object o;
     private Class<?> cast; //Casting target
     
@@ -28,7 +30,7 @@ public class EventReflector {
      * 
      * @param item
      */
-    public EventReflector(CustomItem item, Object event, Class<?> cast) {
+    public EventReflector(CustomItem item, Event event, Class<?> cast) {
         this.item = item;
         this.c = item.getClass();
         try {
@@ -44,7 +46,7 @@ public class EventReflector {
      * 
      * @param c
      */
-    public EventReflector(Class<?> c, Object event, Class<?> cast) {
+    public EventReflector(Class<?> c, Event event, Class<?> cast) {
         try {
             this.item = (CustomItem) c.newInstance();
             this.o = c.newInstance();
@@ -61,7 +63,7 @@ public class EventReflector {
      * @param codeName
      * @throws ItemNotFoundException
      */
-    public EventReflector(String codeName, Object event, Class<?> cast) 
+    public EventReflector(String codeName, Event event, Class<?> cast) 
             throws ItemNotFoundException {
         Class<?> c = null;
         c = ItemRegistry.getClass(codeName);

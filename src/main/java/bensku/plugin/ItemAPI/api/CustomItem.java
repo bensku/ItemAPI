@@ -31,13 +31,13 @@ import bensku.plugin.ItemAPI.util.Durability;
 public class CustomItem {
     private ListMultimap<Class<?>,Method> itemEventMap = 
             ArrayListMultimap.create();
-    private String displayName = null;
-    private String codeName = null;
+    private String displayName;
+    private String codeName;
     private Material material = Material.STICK;
     private double attackDamage = 0.0;
     private double defaultAttackDamage = 1.0;
     private short durability = -1;
-    private List<String> lore = null;
+    private List<String> lore;
     private Map<UUID,String> customDataMap = new HashMap<UUID,String>();
     private int amount = 1;
     private boolean allowCrafting = false;

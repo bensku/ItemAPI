@@ -2,6 +2,12 @@ package bensku.plugin.ItemAPI.util;
 
 import org.bukkit.ChatColor;
 
+/**
+ * Color tag util
+ * @author bensku
+ * @since 2.00
+ *
+ */
 public class ColorTags {
     /**
      * Returns color tags as color codes

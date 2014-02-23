@@ -20,9 +20,25 @@ public class ItemRegistry {
     
     /**
      * Registers custom item
-     * @param className
+     * @param class
      */
     public static void registerCustomItem(Class<?> c) {
+        String codeName = null;
+        try {
+            codeName = getCodeName(c);
+        } catch (ItemNotFoundException e) {
+            return;
+        }
+        itemClassMap.put(codeName, c);
+    }
+    
+    /**
+     * Registers custom item (using Object instead of Class)
+     * @param object of item
+     */
+    public static void registerCustomItem(Object o) {
+    	Class<?> c = o.getClass();
+    	
         String codeName = null;
         try {
             codeName = getCodeName(c);
