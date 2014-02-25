@@ -42,7 +42,7 @@ public class CustomItemListener implements Listener {
 
         if ( !(attacker instanceof LivingEntity) ) {
             //If attacker isn't LivingEntity, it can't hold item
-            List<MetadataValue> metaData = attacker.getMetadata("ItemAPIData");
+            List<MetadataValue> metaData = attacker.getMetadata(ItemAPIMeta.BASE);
             codeName = metaData.get(ItemAPIMeta.LAUNCHER_CODENAME).asString();
             
             //So we try to find item which launched it

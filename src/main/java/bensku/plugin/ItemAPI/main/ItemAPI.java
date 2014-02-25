@@ -15,7 +15,6 @@ import bensku.plugin.ItemAPI.listener.LegacyPlayerListener;
 import bensku.plugin.ItemAPI.test.NameWand;
 import bensku.plugin.ItemAPI.test.TestItem;
 import bensku.plugin.ItemAPI.test.TestWand;
-import bensku.plugin.ItemAPI.api.CustomItem;
 
 @SuppressWarnings("deprecation") //There is legacy code
 public final class ItemAPI extends JavaPlugin {
@@ -35,10 +34,9 @@ public final class ItemAPI extends JavaPlugin {
                 sender.sendMessage("Can't give item for console!");
             } else {
                 Player player = (Player) sender;
-                CustomItem item = new TestWand();
                 //Bukkit.getLogger().info("Debug: item is " + item.toString());
                 //Bukkit.getLogger().info("Debug: Stack is " + item.toItemStack());
-                player.getInventory().addItem(item.toItemStack());
+                player.getInventory().addItem(new TestWand().toItemStack());
             }
             return true;
         } else if (cmd.getName().equalsIgnoreCase("nameditem")) {
