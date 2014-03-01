@@ -1,7 +1,5 @@
 package bensku.plugin.ItemAPI.listener;
 
-import java.util.List;
-
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
@@ -12,13 +10,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.MetadataValue;
 
 import bensku.plugin.ItemAPI.api.CustomStack;
 import bensku.plugin.ItemAPI.api.ItemAPIMeta;
 import bensku.plugin.ItemAPI.event.EventReflector;
 import bensku.plugin.ItemAPI.exception.ItemNotFoundException;
 import bensku.plugin.ItemAPI.exception.NullItemException;
+import bensku.plugin.ItemAPI.main.ItemAPI;
+import bensku.plugin.ItemAPI.util.MetaTool;
 
 /**
  * 
@@ -27,6 +26,8 @@ import bensku.plugin.ItemAPI.exception.NullItemException;
  *
  */
 public class CustomItemListener implements Listener {
+    private MetaTool metaTool = new MetaTool(new ItemAPI());
+    
     /**
      * 
      * @param event
@@ -42,8 +43,8 @@ public class CustomItemListener implements Listener {
 
         if ( !(attacker instanceof LivingEntity) ) {
             //If attacker isn't LivingEntity, it can't hold item
-            List<MetadataValue> metaData = attacker.getMetadata(ItemAPIMeta.BASE);
-            codeName = metaData.get(ItemAPIMeta.LAUNCHER_CODENAME).asString();
+            codeName = (String) metaTool.getMetadata(attacker, 
+                    ItemAPIMeta.LAUNCHER_CODENAME); //Get codeName of the launcher item
             
             //So we try to find item which launched it
             

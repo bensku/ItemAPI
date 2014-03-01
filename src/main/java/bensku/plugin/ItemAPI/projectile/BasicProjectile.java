@@ -1,12 +1,9 @@
 package bensku.plugin.ItemAPI.projectile;
 
-import java.util.List;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 
 import bensku.plugin.ItemAPI.api.CustomItem;
 import bensku.plugin.ItemAPI.api.ItemAPIMeta;
@@ -79,7 +76,6 @@ public class BasicProjectile {
     public void spawn(Location location) {
         Projectile entity = (Projectile) 
                 location.getWorld().spawn(location, this.getType());
-        List<MetadataValue> metadata = entity.getMetadata(ItemAPIMeta.BASE);
         
         CustomItem item = null;
         try {
@@ -97,9 +93,7 @@ public class BasicProjectile {
         }
         
         //Set the metadata
-        metadata.set(ItemAPIMeta.LAUNCHER_CODENAME, 
-                new FixedMetadataValue(new ItemAPI(), codeName));
-        entity.setMetadata(ItemAPIMeta.BASE,
+        entity.setMetadata(ItemAPIMeta.LAUNCHER_CODENAME,
                 new FixedMetadataValue(new ItemAPI(), codeName));
     }
 }
