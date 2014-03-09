@@ -33,9 +33,8 @@ test {
 }
 
 uploadArchives {
-    repositories {
-       flatDir {
-           dirs 'repos'
-       }
+    repositories.mavenDeployer {
+        pom.groupId = "bensku.plugin"
+        repository(url: "file:///itemapi_repo/")
     }
 }
