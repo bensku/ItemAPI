@@ -26,7 +26,11 @@ import bensku.plugin.ItemAPI.util.MetaTool;
  *
  */
 public class CustomItemListener implements Listener {
-    private MetaTool metaTool = new MetaTool(new ItemAPI());
+    private MetaTool metaTool;
+    
+    public CustomItemListener(ItemAPI api) {
+        metaTool = new MetaTool(api);
+    }
     
     /**
      * 

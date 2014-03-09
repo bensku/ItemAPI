@@ -13,7 +13,7 @@ import org.bukkit.plugin.Plugin;
  */
 public class MetaTool {
     private Plugin plugin;
-    
+
     /**
      * Constructor
      * @param plugin
@@ -21,7 +21,7 @@ public class MetaTool {
     public MetaTool(Plugin plugin) {
         this.setPlugin(plugin);
     }
-    
+
     /**
      * Sets plugin of metadata
      * @param plugin
@@ -29,7 +29,7 @@ public class MetaTool {
     public void setPlugin(Plugin plugin) {
         this.plugin = plugin;
     }
-    
+
     /**
      * 
      * @return plugin of the metadata
@@ -37,7 +37,7 @@ public class MetaTool {
     public Plugin getPlugin() {
         return this.plugin;
     }
-    
+
     /**
      * Set metadata
      * @param entity
@@ -47,22 +47,22 @@ public class MetaTool {
      */
     public void setMetadata(Entity entity, String key, Object value){
         entity.setMetadata(key, new FixedMetadataValue(this.plugin, value));
-      }
-    
+    }
+
     /**
      * @param entity
      * @param key
      * @param plugin
      * @return metadata value
      */
-      public Object getMetadata(Entity entity, String key) {
+    public Object getMetadata(Entity entity, String key) {
         List<MetadataValue> values = entity.getMetadata(key);  
         for (MetadataValue value : values){
-           if ( value.getOwningPlugin().getDescription().getName().equals(
-                   this.plugin.getDescription().getName()) ) {
-              return value.value();
-           }
+            if ( value.getOwningPlugin().getDescription().getName().equals(
+                    this.plugin.getDescription().getName()) ) {
+                return value.value();
+            }
         }
         return null;
-      }
+    }
 }

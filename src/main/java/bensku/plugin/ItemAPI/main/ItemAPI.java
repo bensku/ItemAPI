@@ -18,6 +18,7 @@ import bensku.plugin.ItemAPI.test.TestWand;
 
 @SuppressWarnings("deprecation") //There is legacy code
 public final class ItemAPI extends JavaPlugin {
+    
     /**
      * Constructor for logger
      * @since 2.00
@@ -54,12 +55,13 @@ public final class ItemAPI extends JavaPlugin {
         return false;
     }
 
-    public void onEnable(){
+    public void onEnable() {
         this.saveDefaultConfig(); //Save default config if it not exist
         
         getServer().getPluginManager().registerEvents(new LegacyPlayerListener(), this);
         getServer().getPluginManager().registerEvents(new CraftingListener(), this);
-        getServer().getPluginManager().registerEvents(new CustomItemListener(), this);
+        getServer().getPluginManager().registerEvents(new CustomItemListener(this), 
+                this);
         
         //Tests
         getLogger().info("Running tests:");
