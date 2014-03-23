@@ -364,7 +364,7 @@ public class CustomItem {
         Method[] methods = c.getMethods();
         
         for (Method method : methods) {
-            Bukkit.getLogger().info("Debug: For loop");
+            //Bukkit.getLogger().info("Debug: For loop");
             if ( method.isAnnotationPresent(ActiveEvent.class) ) {
                 //Getting parameter of event listener
                 Class<?> eventClass = method.getParameterTypes()[0];
