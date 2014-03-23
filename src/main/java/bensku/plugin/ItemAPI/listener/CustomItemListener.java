@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 import bensku.plugin.ItemAPI.api.CustomStack;
 import bensku.plugin.ItemAPI.api.ItemAPIMeta;
+import bensku.plugin.ItemAPI.api.event.EventType;
 import bensku.plugin.ItemAPI.event.EventReflector;
 import bensku.plugin.ItemAPI.exception.ItemNotFoundException;
 import bensku.plugin.ItemAPI.exception.NullItemException;
@@ -53,8 +54,8 @@ public class CustomItemListener implements Listener {
             //So we try to find item which launched it
             
             try {
-                new EventReflector(codeName, event, 
-                        EntityDamageByEntityEvent.class).call(); //Call event
+                new EventReflector(codeName, event, EntityDamageByEntityEvent.class, 
+                        EventType.ACTIVE).call(); //Call event
                 //Bukkit.getLogger().info("Debug: EventReflector called succesfully");
             } catch (ItemNotFoundException e) {
                 //Someone maybe want delete custom item plugins and
@@ -85,9 +86,8 @@ public class CustomItemListener implements Listener {
             codeName = stack.getCodeName();
             //Bukkit.getLogger().info("Debug: codeName is " + codeName);
             try {
-                new EventReflector(codeName, event, 
-                        EntityDamageByEntityEvent.class).call(); //Call event
-                //Bukkit.getLogger().info("Debug: EventReflector called succesfully");
+                new EventReflector(codeName, event, EntityDamageByEntityEvent.class, 
+                        EventType.ACTIVE).call(); //Call event
             } catch (ItemNotFoundException e) {
                 //Someone maybe want delete custom item plugins and
                 //it gives error like this
@@ -117,8 +117,8 @@ public class CustomItemListener implements Listener {
         if ( isCustom ) {
             String codeName = stack.getCodeName();
             try {
-                new EventReflector(codeName, event, 
-                        PlayerInteractEvent.class).call(); //Call event
+                new EventReflector(codeName, event, PlayerInteractEvent.class, 
+                        EventType.ACTIVE).call(); //Call event
             } catch (ItemNotFoundException e) {
                 //Someone maybe want delete custom item plugins and
                 //it gives error like this
@@ -157,8 +157,8 @@ public class CustomItemListener implements Listener {
                 e.printStackTrace();
             }
             try {
-                new EventReflector(codeName, event, 
-                        PlayerInteractEntityEvent.class).call(); //Call event
+                new EventReflector(codeName, event, PlayerInteractEntityEvent.class, 
+                        EventType.ACTIVE).call(); //Call event
             } catch (ItemNotFoundException e) {
                 //Someone maybe want delete custom item plugins and
                 //it gives error like this
@@ -188,8 +188,8 @@ public class CustomItemListener implements Listener {
         if ( isCustom ) {
             String codeName = stack.getCodeName();
             try {
-                new EventReflector(codeName, event, 
-                        PlayerItemConsumeEvent.class).call(); //Call event
+                new EventReflector(codeName, event, PlayerItemConsumeEvent.class, 
+                        EventType.ACTIVE).call(); //Call event
             } catch (ItemNotFoundException e) {
                 //Someone maybe want delete custom item plugins and
                 //it gives error like this

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,6 +18,9 @@ import com.comphenix.attribute.Attributes.AttributeType;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 
+import bensku.plugin.ItemAPI.api.event.ActiveEvent;
+import bensku.plugin.ItemAPI.api.event.EventType;
+import bensku.plugin.ItemAPI.api.event.PassiveEvent;
 import bensku.plugin.ItemAPI.exception.EventNotHandledException;
 import bensku.plugin.ItemAPI.exception.NullItemException;
 import bensku.plugin.ItemAPI.main.StackTool;
@@ -29,7 +33,7 @@ import bensku.plugin.ItemAPI.util.Durability;
  *
  */
 public class CustomItem {
-    private ListMultimap<Class<?>,Method> itemEventMap = 
+    private ListMultimap<Class<?>,ListMultimap<EventType,Method>> itemEventMap = 
             ArrayListMultimap.create();
     private String displayName;
     private String codeName;
@@ -50,6 +54,7 @@ public class CustomItem {
         this.setCodeName(codeName); //Set the codeName
         this.addCustomData(ItemAPIData.CUSTOMDATA_TEST, "working");
         this.saveDefaultAttackDamage();
+        this.addAnnotationEvents();
     }
     
     /**
@@ -90,51 +95,69 @@ public class CustomItem {
      * @param eventType
      * @param listener
      */
-    public void registerListener(Class<?> eventType, String listener) {
+    public void registerListener(Class<?> eventClass, Method listener, 
+            EventType eventType) {  
+        //Create map which contains Event and it's type
+        ListMultimap<EventType,Method> event = ArrayListMultimap.create();
+        event.put(eventType, listener);
+        this.itemEventMap.put(eventClass, event);
+    }
+    
+    public void registerListener(Class<?> eventClass, String listener, 
+            EventType eventType) {  
         Method method = null;
         try {
-            method = this.getClass().getDeclaredMethod(listener, eventType);
+            method = this.getClass().getDeclaredMethod(listener, eventClass);
         } catch (NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
             return;
         }
-        this.itemEventMap.put(eventType, method);
+        
+        this.registerListener(eventClass, method, eventType);
+    }
+    
+    @Deprecated
+    public void registerListener(Class<?> eventClass, String listener) {
+        this.registerListener(eventClass, listener, EventType.ACTIVE);
     }
     
     /**
      * 
      * @return plain itemEventMap
      */
-    public ListMultimap<Class<?>,Method> getItemEvents() {
+    public ListMultimap<Class<?>, ListMultimap<EventType, Method>> getItemEvents() {
         return this.itemEventMap;
     }
     
     /**
      * 
      * @param event
+     * @param eventType
      * @return event listener Method
      * @throws EventNotHandledException 
      */
-    public List<Method> getEventListener(Class<?> event) throws EventNotHandledException {
+    public List<Method> getEventListener(Class<?> eventClass, EventType eventType) 
+            throws EventNotHandledException {
         List<Method> listeners = new ArrayList<Method>();
         
-        //Bukkit.getLogger().info("Debug: event is " + event.toString());
-        //Bukkit.getLogger().info("Debug: itemEventMap is " + 
-        //        this.getItemEvents().toString());
-        
-        for (Entry<Class<?>, Method> entry : this.itemEventMap.entries()) {
-            //Bukkit.getLogger().info("Debug: For loop");
-            //Bukkit.getLogger().info("Debug: key is " + entry.getKey().toString());
-            if ( event == entry.getKey() ) {
-                //Bukkit.getLogger().info("Debug: key is same than event");
-                listeners.add(entry.getValue());
-                //Bukkit.getLogger().info("Debug: value is " + entry.getValue());
+        for (Entry<Class<?>, ListMultimap<EventType, Method>> entry : 
+                this.itemEventMap.entries()) {
+            //If evenClass is same than key in map:
+            if ( eventClass == entry.getKey() ) {
+                //There shouldn't be more than one key-value, but we need the key
+                for (Entry<EventType, Method> innerEntry : entry.getValue().entries()) {
+                    //If eventType == key, event is same type
+                    if ( eventType == innerEntry.getKey() ) {
+                        //Add event to map
+                        listeners.add(innerEntry.getValue());
+                    }
+                }
             }
         }
         
         if ( listeners.isEmpty() || listeners == null ) {
             throw new EventNotHandledException("Custom item " + this.getCodeName() +
-                    " don't handle event " + event);
+                    " don't handle event " + eventClass.getName());
         }
         return listeners;
     }
@@ -329,5 +352,30 @@ public class CustomItem {
      */
     public boolean getAllowCrafting() {
         return this.allowCrafting;
+    }
+    
+    /**
+     * Add's event handlers defined by annotations to itemEventMap
+     */
+    private void addAnnotationEvents() {
+        //Bukkit.getLogger().info("Debug: Called addAnnotationEvents");
+        
+        Class<?> c = this.getClass();
+        Method[] methods = c.getMethods();
+        
+        for (Method method : methods) {
+            Bukkit.getLogger().info("Debug: For loop");
+            if ( method.isAnnotationPresent(ActiveEvent.class) ) {
+                //Getting parameter of event listener
+                Class<?> eventClass = method.getParameterTypes()[0];
+                //Bukkit.getLogger().info("Debug: Found ActiveEvent " + 
+                //        method.toString());
+                this.registerListener(eventClass, method, EventType.ACTIVE);
+            } else if ( method.isAnnotationPresent(PassiveEvent.class) ) {
+                //Getting parameter of event listener
+                Class<?> eventClass = method.getParameterTypes()[0];
+                this.registerListener(eventClass, method, EventType.PASSIVE);
+            }
+        }
     }
 }

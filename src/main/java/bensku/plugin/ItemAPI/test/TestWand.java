@@ -6,6 +6,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import bensku.plugin.ItemAPI.api.CustomItem;
+import bensku.plugin.ItemAPI.api.event.ActiveEvent;
 
 public class TestWand extends CustomItem {
     public TestWand() {
@@ -13,22 +14,21 @@ public class TestWand extends CustomItem {
         this.setDisplayName("<aqua>Staff of Testing");
         this.setMaterial(Material.STICK);
         this.setAttackDamage(10.0);
-        
-        this.registerListener(EntityDamageByEntityEvent.class, "onHit");
-        this.registerListener(EntityDamageByEntityEvent.class, "onHit2");
-        this.registerListener(PlayerInteractEvent.class, "onInteract");
     }
     
+    @ActiveEvent
     public void onHit(EntityDamageByEntityEvent event) {
         Player player = (Player) event.getDamager();
         player.sendMessage("You hitted with Staff of Testing");
     }
     
+    @ActiveEvent
     public void onHit2(EntityDamageByEntityEvent event) {
         Player player = (Player) event.getDamager();
         player.sendMessage("Hit caused 10 damage");
     }
     
+    @ActiveEvent
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         player.sendMessage("You interacted with Staff of Testing");

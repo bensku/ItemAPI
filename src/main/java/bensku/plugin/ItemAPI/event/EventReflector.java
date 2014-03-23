@@ -9,6 +9,7 @@ import java.util.List;
 import org.bukkit.event.Event;
 
 import bensku.plugin.ItemAPI.api.CustomItem;
+import bensku.plugin.ItemAPI.api.event.EventType;
 import bensku.plugin.ItemAPI.exception.EventNotHandledException;
 import bensku.plugin.ItemAPI.exception.ItemNotFoundException;
 import bensku.plugin.ItemAPI.main.ItemRegistry;
@@ -25,12 +26,14 @@ public class EventReflector {
     private Event event; //Support multiple events using Event
     private Object o;
     private Class<?> cast; //Casting target
+    private EventType eventType;
     
     /**
      * 
      * @param item
      */
-    public EventReflector(CustomItem item, Event event, Class<?> cast) {
+    public EventReflector(CustomItem item, Event event, Class<?> cast, 
+            EventType eventType) {
         this.item = item;
         this.c = item.getClass();
         try {
@@ -40,13 +43,14 @@ public class EventReflector {
         }
         this.event = event;
         this.cast = cast;
+        this.eventType = eventType;
     }
     
     /**
      * 
      * @param c
      */
-    public EventReflector(Class<?> c, Event event, Class<?> cast) {
+    public EventReflector(Class<?> c, Event event, Class<?> cast, EventType eventType) {
         try {
             this.item = (CustomItem) c.newInstance();
             this.o = c.newInstance();
@@ -56,6 +60,7 @@ public class EventReflector {
         this.c = c;
         this.event = event;
         this.cast = cast;
+        this.eventType = eventType;
     }
     
     /**
@@ -63,7 +68,8 @@ public class EventReflector {
      * @param codeName
      * @throws ItemNotFoundException
      */
-    public EventReflector(String codeName, Event event, Class<?> cast) 
+    public EventReflector(String codeName, Event event, Class<?> cast, 
+            EventType eventType) 
             throws ItemNotFoundException {
         Class<?> c = null;
         c = ItemRegistry.getClass(codeName);
@@ -82,6 +88,7 @@ public class EventReflector {
         }
         this.event = event;
         this.cast = cast;
+        this.eventType = eventType;
     }
     
     public void call() {
@@ -89,7 +96,7 @@ public class EventReflector {
         List<Method> listeners = new ArrayList<Method>();
         try {
             //cast is actually event class, so using it...
-            listeners = this.item.getEventListener(this.cast);
+            listeners = this.item.getEventListener(this.cast, this.eventType);
             //Bukkit.getLogger().info("Debug: listeners is " + listeners.toString());
         } catch (EventNotHandledException e) {
             //Do nothing
