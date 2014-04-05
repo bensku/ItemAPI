@@ -69,24 +69,19 @@ public class CraftingListener implements Listener {
                 
                 //It can also avoid IllegalArgumentExceptions
             }
-            try {
-                if ( item.isCustom() ) {
-                    //Bukkit.getLogger().info("Debug: Stack is custom item");
-                    if ( item.getOriginalCustomItem().getAllowCrafting() ) {
-                        /*Bukkit.getLogger().info("Debug: Crafting is allowed");
-                        Bukkit.getLogger().info("Debug: codeName is " +
-                                CustomItemTool.getCodeName(itemStack)); */
-                        //If crafting is allowed:
-                        continue;
-                    } else {
-                        //Bukkit.getLogger().info("Debug: Crafting is disallowed");
-                        event.getInventory().setResult(null);
-                        return;
-                    }
+            if ( item.isCustom() ) {
+                //Bukkit.getLogger().info("Debug: Stack is custom item");
+                if ( item.getOriginalCustomItem().getAllowCrafting() ) {
+                    /*Bukkit.getLogger().info("Debug: Crafting is allowed");
+                    Bukkit.getLogger().info("Debug: codeName is " +
+                            CustomItemTool.getCodeName(itemStack)); */
+                    //If crafting is allowed:
+                    continue;
+                } else {
+                    //Bukkit.getLogger().info("Debug: Crafting is disallowed");
+                    event.getInventory().setResult(null);
+                    return;
                 }
-            } catch (NullItemException e) {
-                //Due to restrictions of Java
-                continue;
             }
         }
     }

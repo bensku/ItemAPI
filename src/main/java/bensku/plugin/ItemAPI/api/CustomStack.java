@@ -55,8 +55,13 @@ public class CustomStack {
      * @return is this stack actually custom
      * @throws NullItemException 
      */
-    public boolean isCustom() throws NullItemException {
-        return StackTool.isStackCustom(this.getItemStack());
+    public boolean isCustom() {
+        try {
+            return StackTool.isStackCustom(this.getItemStack());
+        } catch (NullItemException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
     
     /**
@@ -65,8 +70,12 @@ public class CustomStack {
      * @param value
      * @throws NullItemException 
      */
-    public void setCustomData(UUID key, String value) throws NullItemException {
-        this.setItemStack(StackTool.setCustomData(this.itemStack, key, value));
+    public void setCustomData(UUID key, String value) {
+        try {
+            this.setItemStack(StackTool.setCustomData(this.itemStack, key, value));
+        } catch (NullItemException e) {
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -75,8 +84,13 @@ public class CustomStack {
      * @return custom data for key
      * @throws NullItemException 
      */
-    public String getCustomData(UUID key) throws NullItemException {
-        return StackTool.getCustomData(itemStack, key);
+    public String getCustomData(UUID key) {
+        try {
+            return StackTool.getCustomData(itemStack, key);
+        } catch (NullItemException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
     /**
@@ -84,8 +98,13 @@ public class CustomStack {
      * @return codeName of item, null if item isn't custom
      * @throws NullItemException
      */
-    public String getCodeName() throws NullItemException {
-        return StackTool.getCodeName(itemStack);
+    public String getCodeName() {
+        try {
+            return StackTool.getCodeName(itemStack);
+        } catch (NullItemException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
     /**
@@ -106,7 +125,7 @@ public class CustomStack {
     public Class<?> getItemClass() {
         try {
             return ItemRegistry.getClass(this.getCodeName());
-        } catch (ItemNotFoundException | NullItemException e) {
+        } catch (ItemNotFoundException e) {
             //Do nothing
         }
         return null;

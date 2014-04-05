@@ -63,6 +63,7 @@ public class CustomItemListener implements Listener {
 
                 //Better to do nothing
             }
+            return;
         }
 
         //Get item used:
@@ -73,13 +74,7 @@ public class CustomItemListener implements Listener {
         CustomStack stack = new CustomStack(weapon); //To CustomStack
         //Bukkit.getLogger().info("Debug: weapon is " + weapon.toString());
 
-        boolean isCustom = false; //It actually isn't, but false don't trigger if statement
-        try {
-            isCustom = stack.isCustom(); //Now set real value of isCustom
-            //Bukkit.getLogger().info("Debug: weapon isn't null");
-        } catch (NullItemException e) {
-            //And if there isn't item, its false anyway
-        }
+        boolean isCustom = stack.isCustom();
 
         if ( isCustom ) {
             //Bukkit.getLogger().info("Debug: weapon is custom item");
@@ -106,13 +101,8 @@ public class CustomItemListener implements Listener {
     public void onInteract(PlayerInteractEvent event) throws NullItemException {
         ItemStack item = event.getItem();
         CustomStack stack = new CustomStack(item);
-
-        boolean isCustom = false; //It actually isn't, but false don't trigger if statement
-        try {
-            isCustom = stack.isCustom(); //Now set real value of isCustom
-        } catch (NullItemException e) {
-            //And if there isn't item, its false anyway
-        }
+        
+        boolean isCustom = stack.isCustom();
 
         if ( isCustom ) {
             String codeName = stack.getCodeName();
@@ -142,20 +132,11 @@ public class CustomItemListener implements Listener {
             return;
         }
 
-        boolean isCustom = false; //It actually isn't, but false don't trigger if statement
-        try {
-            isCustom = stack.isCustom(); //Now set real value of isCustom
-        } catch (NullItemException e) {
-            //And if there isn't item, its false anyway
-        }
+        boolean isCustom = stack.isCustom();
 
         if ( isCustom ) {
             String codeName = null;
-            try {
-                codeName = stack.getCodeName();
-            } catch (NullItemException e) {
-                e.printStackTrace();
-            }
+            codeName = stack.getCodeName();
             try {
                 new EventReflector(codeName, event, PlayerInteractEntityEvent.class, 
                         EventType.ACTIVE).call(); //Call event
@@ -178,12 +159,7 @@ public class CustomItemListener implements Listener {
         ItemStack item = event.getItem();
         CustomStack stack = new CustomStack(item);
 
-        boolean isCustom = false; //It actually isn't, but false don't trigger if statement
-        try {
-            isCustom = stack.isCustom(); //Now set real value of isCustom
-        } catch (NullItemException e) {
-            //And if there isn't item, its false anyway
-        }
+        boolean isCustom = stack.isCustom();
 
         if ( isCustom ) {
             String codeName = stack.getCodeName();

@@ -50,7 +50,7 @@ public class CustomItem {
      * Constructor that asks codeName
      * @param codeName
      */
-    public CustomItem(String codeName) {
+    public CustomItem(String codeName) {  
         this.setCodeName(codeName); //Set the codeName
         this.addCustomData(ItemAPIData.CUSTOMDATA_TEST, "working");
         this.saveDefaultAttackDamage();
@@ -364,7 +364,7 @@ public class CustomItem {
         Method[] methods = c.getMethods();
         
         for (Method method : methods) {
-            //Bukkit.getLogger().info("Debug: For loop");
+            Bukkit.getLogger().info("Debug: For loop");
             if ( method.isAnnotationPresent(ActiveEvent.class) ) {
                 //Getting parameter of event listener
                 Class<?> eventClass = method.getParameterTypes()[0];
