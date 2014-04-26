@@ -71,8 +71,12 @@ public class CustomItemListener implements Listener {
         LivingEntity entity = (LivingEntity) attacker;
         EntityEquipment equipment = entity.getEquipment(); //Get equipment
         ItemStack weapon = equipment.getItemInHand();
-        CustomStack stack = new CustomStack(weapon); //To CustomStack
-        //Bukkit.getLogger().info("Debug: weapon is " + weapon.toString());
+        CustomStack stack = null;
+        try {
+            stack = new CustomStack(weapon);
+        } catch (NullItemException e) {
+            return;
+        }
 
         boolean isCustom = stack.isCustom();
 
