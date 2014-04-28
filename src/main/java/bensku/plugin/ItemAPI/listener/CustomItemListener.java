@@ -5,6 +5,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -161,7 +163,12 @@ public class CustomItemListener implements Listener {
     @EventHandler
     public void onConsume(PlayerItemConsumeEvent event) throws NullItemException {
         ItemStack item = event.getItem();
-        CustomStack stack = new CustomStack(item);
+        CustomStack stack = null;
+        try {
+            stack = new CustomStack(item);
+        } catch (NullItemException e) {
+            return;
+        }
 
         boolean isCustom = stack.isCustom();
 
@@ -169,6 +176,66 @@ public class CustomItemListener implements Listener {
             String codeName = stack.getCodeName();
             try {
                 new EventReflector(codeName, event, PlayerItemConsumeEvent.class, 
+                        EventType.ACTIVE).call(); //Call event
+            } catch (ItemNotFoundException e) {
+                //Someone maybe want delete custom item plugins and
+                //it gives error like this
+
+                //Better to do nothing
+            }
+        }
+    }
+    
+    /**
+     * 
+     * @param event
+     */
+    @EventHandler
+    public void onClickInInventory(InventoryClickEvent event) {
+        ItemStack item = event.getCurrentItem();
+        CustomStack stack = null;
+        try {
+            stack = new CustomStack(item);
+        } catch (NullItemException e) {
+            return;
+        }
+
+        boolean isCustom = stack.isCustom();
+
+        if ( isCustom ) {
+            String codeName = stack.getCodeName();
+            try {
+                new EventReflector(codeName, event, InventoryClickEvent.class, 
+                        EventType.ACTIVE).call(); //Call event
+            } catch (ItemNotFoundException e) {
+                //Someone maybe want delete custom item plugins and
+                //it gives error like this
+
+                //Better to do nothing
+            }
+        }
+    }
+    
+    /**
+     * 
+     * @param event
+     */
+    @EventHandler
+    public void onDropByPlayer(PlayerDropItemEvent event) {
+        ItemStack item = event.getItemDrop().getItemStack();
+        CustomStack stack = null;
+        try {
+            stack = new CustomStack(item);
+        } catch (NullItemException e) {
+            return;
+        }
+
+        boolean isCustom = stack.isCustom();
+
+        if ( isCustom ) {
+            String codeName = stack.getCodeName();
+            try {
+                new EventReflector(codeName, event, PlayerDropItemEvent.class, 
                         EventType.ACTIVE).call(); //Call event
             } catch (ItemNotFoundException e) {
                 //Someone maybe want delete custom item plugins and

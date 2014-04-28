@@ -10,7 +10,7 @@ import bensku.plugin.ItemAPI.api.ItemAPIMeta;
 import bensku.plugin.ItemAPI.main.ItemAPI;
 
 /**
- * Basic projectile object
+ * Basic projectile object. Not tested (yet)!
  * @author bensku
  * @since 2.00
  *

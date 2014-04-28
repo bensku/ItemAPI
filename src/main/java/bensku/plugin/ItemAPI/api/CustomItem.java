@@ -43,7 +43,7 @@ public class CustomItem {
     private List<String> lore;
     private Map<UUID,String> customDataMap = new HashMap<UUID,String>();
     private int amount = 1;
-    private boolean allowCrafting = false;
+    private boolean allowVanillaCrafting = false;
     
     /**
      * Constructor that asks codeName
@@ -338,19 +338,19 @@ public class CustomItem {
     }
     
     /**
-     * Sets is crafting using this item allowed as normal item made same material
+     * Sets is vanilla crafting with this item allowed
      * @param allow
      */
     public void setAllowCrafting(boolean allow) {
-        this.allowCrafting = allow;
+        this.allowVanillaCrafting = allow;
     }
     
     /**
      * 
-     * @return is crafting using this item allowed
+     * @return is vanilla crafting using this item allowed
      */
     public boolean getAllowCrafting() {
-        return this.allowCrafting;
+        return this.allowVanillaCrafting;
     }
     
     /**
