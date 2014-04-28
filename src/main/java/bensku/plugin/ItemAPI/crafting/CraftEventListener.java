@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Custom recipe listener
  * @author bensku
- * @since 2.03
+ * @since 2.02
  *
  */
 public class CraftEventListener implements Listener {
@@ -33,7 +33,7 @@ public class CraftEventListener implements Listener {
                 event.getInventory().setResult(recipe.getResult());
             }
             
-            continue; //And continue here
+            continue; //...and continue here
         }
     }
 }

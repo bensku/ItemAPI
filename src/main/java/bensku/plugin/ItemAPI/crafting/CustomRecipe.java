@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Custom crafting recipe
  * @author bensku
- * @since 2.03
+ * @since 2.02
  *
  */
 public class CustomRecipe {

@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import bensku.plugin.ItemAPI.crafting.CraftEventListener;
 import bensku.plugin.ItemAPI.listener.CraftingListener;
 import bensku.plugin.ItemAPI.listener.CustomItemListener;
 import bensku.plugin.ItemAPI.test.TestWand;
@@ -41,6 +42,7 @@ public final class ItemAPI extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CraftingListener(), this);
         getServer().getPluginManager().registerEvents(new CustomItemListener(this), 
                 this);
+        getServer().getPluginManager().registerEvents(new CraftEventListener(), this);
         
         //Tests
         ItemRegistry.registerCustomItem(TestWand.class);

@@ -1,6 +1,6 @@
 name: ItemAPI
 main: bensku.plugin.ItemAPI.main.ItemAPI
-version: 2.01
+version: 2.02
 commands:
    testitem:
       description: Gives ItemAPI test wand
