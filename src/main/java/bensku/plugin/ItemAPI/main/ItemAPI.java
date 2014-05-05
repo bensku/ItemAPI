@@ -7,6 +7,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import bensku.plugin.ItemAPI.crafting.CraftEventListener;
+import bensku.plugin.ItemAPI.crafting.CustomRecipe;
+import bensku.plugin.ItemAPI.crafting.RecipeRegistry;
 import bensku.plugin.ItemAPI.listener.CraftingListener;
 import bensku.plugin.ItemAPI.listener.CustomItemListener;
 import bensku.plugin.ItemAPI.test.TestWand;
@@ -46,6 +48,17 @@ public final class ItemAPI extends JavaPlugin {
         
         //Tests
         ItemRegistry.registerCustomItem(TestWand.class);
+        
+        CustomRecipe recipe = new CustomRecipe();
+        recipe.setIngredient(2, new TestWand().toItemStack());
+        recipe.setResult(new TestWand().toItemStack());
+        RecipeRegistry.registerRecipe(recipe);
+        
+        //ShapedRecipe bukkitRecipe = new ShapedRecipe(new TestWand().toItemStack());
+        //bukkitRecipe.shape(" a ", "   ", "   ");
+        //bukkitRecipe.setIngredient('a', Material.DIAMOND);
+        //this.getServer().addRecipe(bukkitRecipe);
+        //Bukkit.getLogger().info("Debug: Ingredients are " + bukkitRecipe.getIngredientMap());
     }
  
     public void onDisable(){

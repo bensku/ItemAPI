@@ -106,7 +106,12 @@ public class CustomItemListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) throws NullItemException {
         ItemStack item = event.getItem();
-        CustomStack stack = new CustomStack(item);
+        CustomStack stack = null;
+        try {
+            stack = new CustomStack(item);
+        } catch (NullItemException e) {
+            return;
+        }
         
         boolean isCustom = stack.isCustom();
 

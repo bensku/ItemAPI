@@ -16,35 +16,36 @@ public class CustomRecipe {
     
     public CustomRecipe() {
         for (int i = 0; i <= 9; i++) {
-            recipe.add(new ItemStack(Material.AIR));
+            recipe.add(new ItemStack(Material.AIR, 0));
         }
     }
     
     /**
-     * Sets reagent of specific crafting slot. the i is determined following way:
+     * Sets ingredient of specific crafting slot. The i is determined following way:
+     * <pre>
      * 1 2 3
      * 4 5 6 => 0
      * 7 8 9
-     * <p>
+     * </pre>
      * Please don't use this to set result of recipe, use instead setResult
      * @param i
      * @param reagent
-     * @see CustomRecipe.setResult
+     * @see setResult
      */
-    public void setReagent(int i, ItemStack reagent) {
+    public void setIngredient(int i, ItemStack reagent) {
         recipe.set(i, reagent);
     }
     
     /**
-     * Get's reagent of specific crafting slot
+     * Returns ingredient for specific slot
      * @param i
-     * @return 
+     * @return
      */
-    public ItemStack getReagent(int i) {
+    public ItemStack getIngredient(int i) {
         return recipe.get(i);
     }
     
-    public ArrayList<ItemStack> getReagents() {
+    public ArrayList<ItemStack> getIngredients() {
         return this.recipe;
     }
     
@@ -53,7 +54,7 @@ public class CustomRecipe {
      * @param result
      */
     public void setResult(ItemStack result) {
-        this.setReagent(0, result);
+        this.setIngredient(0, result);
     }
     
     /**
@@ -61,6 +62,11 @@ public class CustomRecipe {
      * @return ItemStack - result of recipe
      */
     public ItemStack getResult() {
-        return this.getReagent(0);
+        return this.getIngredient(0);
+    }
+    
+    @Override
+    public String toString() {
+        return "CustomRecipe={" + this.getIngredients() + "}";
     }
 }
