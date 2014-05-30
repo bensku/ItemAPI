@@ -39,7 +39,7 @@ public class StackTool {
         //Setting itemMeta and itemStack data
         itemStack.setDurability((short) item.getDurability().getDurability());
         itemMeta.setDisplayName(item.getDisplayName());
-        itemMeta.setLore(item.getLore());
+        itemMeta.setLore(item.lore);
         
         itemStack.setItemMeta(itemMeta); //Apply itemMeta
         
@@ -52,7 +52,7 @@ public class StackTool {
         
         Attributes attributes = new Attributes(itemStack);
         
-        attributes.add(Attribute.newBuilder().name("Attack Damage")
+        attributes.add(Attribute.newBuilder().name("generic.attackDamage")
                 .type(AttributeType.GENERIC_ATTACK_DAMAGE)
                 .amount(item.getAttackDamage()).build());
         itemStack = attributes.getStack();

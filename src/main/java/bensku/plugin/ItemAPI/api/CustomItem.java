@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -40,7 +41,7 @@ public class CustomItem {
     private double attackDamage = 0.0;
     private double defaultAttackDamage = 1.0;
     private short durability = -1;
-    private List<String> lore;
+    public List<String> lore;
     private Map<UUID,String> customDataMap = new HashMap<UUID,String>();
     private int amount = 1;
     private boolean allowVanillaCrafting = false;
@@ -284,6 +285,7 @@ public class CustomItem {
      * @return ItemStack
      */
     public ItemStack toItemStack() {
+        Bukkit.getLogger().info("Debug: lore is inside CustomStack " + this.getLore());
         return StackTool.customItemToStack(this, this.getAmount());
     }
     
