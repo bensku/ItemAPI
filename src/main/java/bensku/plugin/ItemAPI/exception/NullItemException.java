@@ -6,7 +6,7 @@ package bensku.plugin.ItemAPI.exception;
  * @since 2.00
  *
  */
-public class NullItemException extends Exception {
+public class NullItemException extends RuntimeException {
     private static final long serialVersionUID = -7217039421715770929L;
 
     public NullItemException(String message) {

@@ -6,7 +6,7 @@ package bensku.plugin.ItemAPI.exception;
  * @since 2.00
  *
  */
-public class ItemNotFoundException extends Exception {
+public class ItemNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 7935731441128409105L;
 
     public ItemNotFoundException(String message) {
