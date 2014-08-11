@@ -3,6 +3,7 @@ package bensku.plugin.ItemAPI.main;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -12,6 +13,7 @@ import com.comphenix.attribute.Attributes.Attribute;
 import com.comphenix.attribute.Attributes.AttributeType;
 
 import bensku.plugin.ItemAPI.api.CustomItem;
+import bensku.plugin.ItemAPI.api.CustomStack;
 import bensku.plugin.ItemAPI.api.ItemAPIData;
 import bensku.plugin.ItemAPI.exception.NullItemException;
 
@@ -37,7 +39,7 @@ public class StackTool {
         ItemMeta itemMeta = itemStack.getItemMeta();
         
         //Setting itemMeta and itemStack data
-        itemStack.setDurability((short) item.getDurability().getDurability());
+        itemStack.setDurability((short) item.getDurability().getValue());
         itemMeta.setDisplayName(item.getDisplayName());
         itemMeta.setLore(item.lore);
         

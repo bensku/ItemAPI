@@ -111,10 +111,10 @@ public class CustomStack {
      * 
      * @return durability handler of this ItemStack
      * @see Durability
+     * @since 2.03 - now returns linked Durability object
      */
     public Durability getDurability() {
-        return new Durability(this.getItemStack().getDurability(), 
-                this.getItemStack().getType());
+        return new Durability(this.getItemStack());
     }
     
     /**

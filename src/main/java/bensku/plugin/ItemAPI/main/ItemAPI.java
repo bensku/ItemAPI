@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import bensku.plugin.ItemAPI.crafting.CraftEventListener;
 import bensku.plugin.ItemAPI.crafting.CustomRecipe;
+import bensku.plugin.ItemAPI.crafting.Ingredient;
 import bensku.plugin.ItemAPI.crafting.RecipeRegistry;
 import bensku.plugin.ItemAPI.listener.CraftingListener;
 import bensku.plugin.ItemAPI.listener.CustomItemListener;
@@ -31,7 +32,8 @@ public final class ItemAPI extends JavaPlugin {
                 sender.sendMessage("Can't give item for console!");
             } else {
                 Player player = (Player) sender;
-                player.sendMessage("This feature removed in ItemAPI 2.01");
+                player.sendMessage("This test feature removed in ItemAPI 2.01, but "
+                        + "dynamic custom names are of course still supported.");
             }
             return true;
         }
@@ -50,15 +52,9 @@ public final class ItemAPI extends JavaPlugin {
         ItemRegistry.registerCustomItem(TestWand.class);
         
         CustomRecipe recipe = new CustomRecipe();
-        recipe.setIngredient(2, new TestWand().toItemStack());
-        recipe.setResult(new TestWand().toItemStack());
+        recipe.setIngredient(2, new Ingredient(new TestWand().toItemStack()));
+        recipe.setResult(new Ingredient(new TestWand().toItemStack()));
         RecipeRegistry.registerRecipe(recipe);
-        
-        //ShapedRecipe bukkitRecipe = new ShapedRecipe(new TestWand().toItemStack());
-        //bukkitRecipe.shape(" a ", "   ", "   ");
-        //bukkitRecipe.setIngredient('a', Material.DIAMOND);
-        //this.getServer().addRecipe(bukkitRecipe);
-        //Bukkit.getLogger().info("Debug: Ingredients are " + bukkitRecipe.getIngredientMap());
     }
  
     public void onDisable(){

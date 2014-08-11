@@ -294,13 +294,7 @@ public class CustomItem {
      * @return CustomStack (contains ItemStack)
      */
     public CustomStack toCustomStack() {
-        try {
-            return new CustomStack(this.toItemStack());
-        } catch (NullItemException e) {
-            //This should never happen, something is really weird if this happens
-            e.printStackTrace();
-        }
-        return null; //This is only due to Java syntax restrictions
+        return new CustomStack(this.toItemStack());
     }
     
     public Durability getDurability() {
