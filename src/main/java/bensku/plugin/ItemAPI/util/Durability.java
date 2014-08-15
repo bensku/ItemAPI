@@ -3,6 +3,8 @@ package bensku.plugin.ItemAPI.util;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import bensku.plugin.ItemAPI.exception.NullItemException;
+
 /**
  * Class to handle durability of items and change it to damage percentages. The values
  * will automatically changed to linked ItemStack, to prevent this, if there is one.
@@ -47,6 +49,11 @@ public class Durability {
      * @since 2.03
      */
     public Durability(ItemStack item) {
+        if ( item.getType().equals(Material.AIR) || item == null ) {
+            throw new NullItemException("Can't create Durability object from null or "
+                    + "AIR item.");
+        }
+        
         this.link(item); //Link to ItemStack
         this.fetchFromLink(); //Fetch item's data
     }
@@ -126,7 +133,7 @@ public class Durability {
      * @since 2.03
      */
     private void updateLink() {
-        if ( linkedItem == null ) return;
+        if ( linkedItem == null ) { return; }
         
         linkedItem.setDurability((short) this.getValue());
         linkedItem.setType(this.getMaterial());
@@ -136,7 +143,7 @@ public class Durability {
      * @since 2.03
      */
     private void fetchFromLink() {
-        if ( this.isLinked() == false ) return;
+        if ( this.isLinked() == false ) { return; }
         
         this.setValue(linkedItem.getDurability());
         this.setMaterial(linkedItem.getType());

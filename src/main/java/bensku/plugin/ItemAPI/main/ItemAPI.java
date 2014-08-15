@@ -1,5 +1,6 @@
 package bensku.plugin.ItemAPI.main;
 
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,7 +11,6 @@ import bensku.plugin.ItemAPI.crafting.CraftEventListener;
 import bensku.plugin.ItemAPI.crafting.CustomRecipe;
 import bensku.plugin.ItemAPI.crafting.Ingredient;
 import bensku.plugin.ItemAPI.crafting.RecipeRegistry;
-import bensku.plugin.ItemAPI.listener.CraftingListener;
 import bensku.plugin.ItemAPI.listener.CustomItemListener;
 import bensku.plugin.ItemAPI.test.TestWand;
 
@@ -43,7 +43,6 @@ public final class ItemAPI extends JavaPlugin {
     public void onEnable() {
         this.saveDefaultConfig(); //Save default config if it not exist
         
-        getServer().getPluginManager().registerEvents(new CraftingListener(), this);
         getServer().getPluginManager().registerEvents(new CustomItemListener(this), 
                 this);
         getServer().getPluginManager().registerEvents(new CraftEventListener(), this);
@@ -53,7 +52,7 @@ public final class ItemAPI extends JavaPlugin {
         
         CustomRecipe recipe = new CustomRecipe();
         recipe.setIngredient(2, new Ingredient(new TestWand().toItemStack()));
-        recipe.setResult(new Ingredient(new TestWand().toItemStack()));
+        recipe.setResult(new Ingredient(Material.STONE));
         RecipeRegistry.registerRecipe(recipe);
     }
  

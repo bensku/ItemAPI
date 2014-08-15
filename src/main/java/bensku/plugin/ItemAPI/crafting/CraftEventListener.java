@@ -5,9 +5,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.CraftingInventory;
+import org.bukkit.inventory.ItemStack;
+
+import bensku.plugin.ItemAPI.api.CustomStack;
+import bensku.plugin.ItemAPI.exception.NullItemException;
 
 /**
  * Custom recipe listener
@@ -18,39 +21,57 @@ import org.bukkit.inventory.CraftingInventory;
  */
 public class CraftEventListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onInventoryClick(InventoryClickEvent event) {
-        if ( !(event.getInventory() instanceof CraftingInventory) ) {
-            //Inventory where the click happened isn't crafting inventory
+    public void onPrepareCraft(PrepareItemCraftEvent event) {
+        //Bukkit.getLogger().info("Debug: Got PrepareItemCraftEvent");
+        HumanEntity entity = event.getViewers().get(0);
+        if ( !(entity instanceof Player) ) {
+            //Only player can move items currently, this is only for future proof code
             return;
         }
-        CraftingInventory inv = (CraftingInventory) event.getInventory();
         
-        HumanEntity clicker = event.getWhoClicked();
-        if ( !(clicker instanceof Player) ) {
-            //Only player can move items currently, this is only for future proof code
-        }
-        
-        InventoryAction action = event.getAction();
-        
-        switch (action) { //Test is the action related to item placing or removing
-            case PLACE_ALL: break;
-            case PLACE_SOME: break;
-            case PLACE_ONE: break;
-            case PICKUP_ALL: break;
-            case PICKUP_SOME: break;
-            case PICKUP_ONE: break;
-            case SWAP_WITH_CURSOR: break;
-            default: return; //We don't listen any other actions
-        }
-        
+        CraftingInventory inv = event.getInventory();
+
         CustomRecipe recipe = RecipeRegistry.getRecipe(inv);
         if ( recipe == null ) {
-            return;
-        } else if ( !recipe.canCraft(clicker) ) {
-            return;
+            if ( RecipeRegistry.hasBukkitRecipe(inv) ) {
+                event.getInventory().setResult(null);
+            } else {
+                //Code from old CraftingListener... temporary
+
+                ItemStack[] items = event.getInventory().getContents();
+                //Bukkit.getLogger().info("Debug: items is " + items.toString());
+                for (int i = 1; i < items.length; i++) {
+                    //i starts from 1 because 0 is crafting result (and maybe custom item)
+                    ItemStack stack = items[i];
+                    CustomStack item = null;
+                    try {
+                        item = new CustomStack(stack);
+                    } catch (NullItemException e) {
+                        //If itemStack is null (or air), there isn't any item, so...
+                        continue;
+                        //It can also avoid IllegalArgumentExceptions
+                    }
+                    if ( item.isCustom() ) {
+                        //Bukkit.getLogger().info("Debug: Stack is custom item");
+                        if ( item.getOriginalCustomItem().getAllowCrafting() ) {
+                            //If crafting is allowed:
+                            continue;
+                        } else {
+                            //Bukkit.getLogger().info("Debug: Crafting is disallowed");
+                            event.getInventory().setResult(null);
+                            return;
+                        }
+                    }
+                }
+            }
+        } else if ( !recipe.canCraft(entity) ) {
+            event.getInventory().setResult(null);
         }
-        
-        inv.setResult(recipe.getResult().getItem());
+
+        //entity.openInventory(inv);
+
+        //((Player) entity).updateInventory();
     }
 }
+
 

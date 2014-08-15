@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.inventory.ItemStack;
 
 import bensku.plugin.ItemAPI.util.restrict.WorldRestriction;
 
@@ -25,6 +24,8 @@ public class CustomRecipe {
         for (int i = 0; i <= 9; i++) {
             recipe.add(new Ingredient(Material.AIR));
         }
+        
+        worldRestrict = new WorldRestriction();
     }
     
     /**

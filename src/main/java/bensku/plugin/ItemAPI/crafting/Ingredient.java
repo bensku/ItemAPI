@@ -73,7 +73,7 @@ public class Ingredient {
     /**
      * Sets is the same custom names required in crafting.
      * <p>
-     * <b>Warining:</b>Setting this false is risky, because players may then use vanilla
+     * <b>Warning:</b>Setting this false is risky, because players may then use vanilla
      * items in place of custom items.
      * @param customMatch
      */
@@ -185,5 +185,10 @@ public class Ingredient {
      */
     public void setItem(ItemStack item) {
         this.item = item;
+    }
+    
+    @Override
+    public String toString() {
+        return "Ingredient={item=" + this.getItem() + "}";
     }
 }
