@@ -1,8 +1,8 @@
 package bensku.plugin.ItemAPI.itemData;
 
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
-import bensku.plugin.ItemAPI.main.Config;
 import bensku.plugin.ItemAPI.main.ItemAPI;
 
 /**
@@ -14,13 +14,11 @@ import bensku.plugin.ItemAPI.main.ItemAPI;
  */
 public class ItemData {
     private ItemStack item;
-    private DataManager dataMgr;
     private ItemAPI api;
     
-    public ItemData(ItemStack item, ItemAPI api, DataManager dataMgr) {
+    public ItemData(ItemStack item, ItemAPI api) {
         this.item = item;
         this.api = api;
-        this.dataMgr = dataMgr;
     }
     
     /**
@@ -28,7 +26,7 @@ public class ItemData {
      * @param item
      */
     public ItemData(ItemStack item) {
-        this(item, ItemAPI.getAPI(), ItemAPI.getAPI().getDataManager());
+        this(item, ItemAPI.getAPI());
     }
     
     /**
@@ -37,9 +35,7 @@ public class ItemData {
      * @param value
      */
     public void setData(Object key, Object value) {
-        Config config = this.api.getConfig();
-        String handlerName = config.getString("data-save.handler");
-        DataHandler handler = this.dataMgr.getHandler(handlerName);
+        DataHandler handler = this.api.getDataHandler();
         handler.setData(this.item, key, value);
     }
     
@@ -49,9 +45,7 @@ public class ItemData {
      * @return data using given key from item
      */
     public Object getData(Object key) {
-        Config config = this.api.getConfig();
-        String handlerName = config.getString("data-save.handler");
-        DataHandler handler = this.dataMgr.getHandler(handlerName);
+        DataHandler handler = this.api.getDataHandler();
         return handler.getData(this.item, key);
     }
 }

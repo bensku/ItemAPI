@@ -284,7 +284,6 @@ public class CustomItem {
      * @return ItemStack
      */
     public ItemStack toItemStack() {
-        Bukkit.getLogger().info("Debug: lore is inside CustomStack " + this.getLore());
         return StackTool.customItemToStack(this, this.getAmount());
     }
     

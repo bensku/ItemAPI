@@ -34,6 +34,10 @@ public class CustomStack {
     private ItemData data;
     
     public CustomStack(ItemStack stack) {
+        if ( stack == null ) {
+            throw new NullItemException("Cannot construct CustomStack from null");
+        }
+        
         this.handle = stack;
         this.nbt = new ItemCompound(stack);
         this.data = new ItemData(stack);

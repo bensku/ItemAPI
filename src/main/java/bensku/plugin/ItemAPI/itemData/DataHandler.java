@@ -24,4 +24,6 @@ public interface DataHandler {
      * @return data for given key in given ItenStack
      */
     public Object getData(ItemStack item, Object key);
+    
+    public String getName();
 }

@@ -32,4 +32,9 @@ public class LoreHandler implements DataHandler {
         return lore;
     }
 
+    @Override
+    public String getName() {
+        return "AttributeHandler";
+    }
+
 }

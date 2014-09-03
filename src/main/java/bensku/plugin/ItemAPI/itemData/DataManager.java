@@ -3,6 +3,8 @@ package bensku.plugin.ItemAPI.itemData;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
+
 import bensku.plugin.ItemAPI.main.ItemAPI;
 
 /**
@@ -46,7 +48,7 @@ public class DataManager {
     public DataHandler getHandler(String name) {
         for (int i = 0; i < handlers.size(); i++) {
             DataHandler handler = this.handlers.get(i);
-            if ( handler.getClass().getName().equals(name) ) {
+            if ( handler.getName() == name) {
                 return handler;
             }
         }

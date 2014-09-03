@@ -63,6 +63,8 @@ public class Config extends YamlConfiguration {
     }
     
     public void copyFromJar(Plugin plugin) {
-        plugin.saveResource(this.configFile.getName(), false);
+        if ( !this.configFile.exists() ) {
+            plugin.saveResource(this.configFile.getName(), false);
+        }
     }
 }

@@ -114,7 +114,7 @@ public class CustomItemListener implements Listener {
         }
         
         boolean isCustom = stack.isCustom();
-
+        
         if ( isCustom ) {
             String codeName = stack.getCodeName();
             try {

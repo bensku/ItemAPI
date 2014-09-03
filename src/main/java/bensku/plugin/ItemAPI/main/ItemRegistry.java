@@ -37,15 +37,7 @@ public class ItemRegistry {
      * @param object of item
      */
     public static void registerCustomItem(Object o) {
-    	Class<?> c = o.getClass();
-    	
-        String codeName = null;
-        try {
-            codeName = getCodeName(c);
-        } catch (ItemNotFoundException e) {
-            return;
-        }
-        itemClassMap.put(codeName, c);
+    	registerCustomItem(o.getClass());
     }
     
     /**

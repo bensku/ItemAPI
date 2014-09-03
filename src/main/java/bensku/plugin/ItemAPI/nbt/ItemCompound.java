@@ -2,10 +2,10 @@ package bensku.plugin.ItemAPI.nbt;
 
 import org.bukkit.inventory.ItemStack;
 
+import bensku.plugin.ItemAPI.main.ItemAPI;
+
 import com.comphenix.attribute.NbtFactory;
 import com.comphenix.attribute.NbtFactory.NbtCompound;
-
-import bensku.plugin.ItemAPI.main.ItemAPI;
 
 /**
  * Simple item NBT wrapper with NbtFactory support. ProtocolLib support coming soon.
