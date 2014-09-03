@@ -29,6 +29,7 @@ import bensku.plugin.ItemAPI.util.Durability;
 /**
  * Extendible custom item class
  * @author bensku
+ * @since 2.03 - update custom data functions
  *
  */
 public class CustomItem {
@@ -41,7 +42,7 @@ public class CustomItem {
     private double defaultAttackDamage = 1.0;
     private short durability = -1;
     public List<String> lore;
-    private Map<UUID,String> customDataMap = new HashMap<UUID,String>();
+    private Map<Object,Object> customDataMap = new HashMap<Object,Object>();
     private int amount = 1;
     private boolean allowVanillaCrafting = false;
     
@@ -241,8 +242,20 @@ public class CustomItem {
      * Adds new custom data value
      * @param key
      * @param value
+     * @deprecated
      */
+    @Deprecated
     public void addCustomData(UUID key, String value) {
+        this.customDataMap.put(key, value);
+    }
+    
+    /**
+     * Adds new custom data value
+     * @param key
+     * @param value
+     * @since 2.03
+     */
+    public void addCustomData(Object key, Object value) {
         this.customDataMap.put(key, value);
     }
     
@@ -250,16 +263,29 @@ public class CustomItem {
      * 
      * @param key
      * @return custom data value
+     * @deprecated
      */
+    @Deprecated
     public String getCustomData(UUID key) {
+        return this.getCustomData((Object) key).toString();
+    }
+    
+    /**
+     * 
+     * @param key
+     * @return custom data value
+     * @since 2.03
+     */
+    public Object getCustomData(Object key) {
         return this.customDataMap.get(key);
     }
     
     /**
      * 
      * @return customDataMap
+     * @since 2.03 - old function removed
      */
-    public Map<UUID,String> getCustomDataMap() {
+    public Map<Object,Object> getCustomDataMap() {
         return this.customDataMap;
     }
     

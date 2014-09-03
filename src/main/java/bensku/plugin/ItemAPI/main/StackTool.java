@@ -19,7 +19,7 @@ import bensku.plugin.ItemAPI.exception.NullItemException;
 /**
  * Contains some tools that is related ItemStacks
  * <p>
- * Don't use functions from this class directly, CustomItemStack is better way
+ * Don't use functions from this class directly, CustomStack is better way
  * @author bensku
  * @since 2.00
  * @see CustomStack
@@ -32,6 +32,7 @@ public class StackTool {
      * @param item
      * @param amount
      * @return ItemStack from CustomItem
+     * @since 2.03 - update to use CustomStack
      */
     public static ItemStack customItemToStack(CustomItem item, int amount) {
         ItemStack itemStack = new ItemStack(item.getMaterial(), amount);
@@ -59,13 +60,12 @@ public class StackTool {
         itemStack = attributes.getStack();
         
         //Transfer custom data...
-        for (Entry<UUID, String> entry : item.getCustomDataMap().entrySet()) {
-            UUID key = entry.getKey();
-            String value = entry.getValue();
+        for (Entry<Object, Object> entry : item.getCustomDataMap().entrySet()) {
+            Object key = entry.getKey();
+            Object value = entry.getValue();
             
-            storage = AttributeStorage.newTarget(itemStack, key);
-            storage.setData(value);
-            itemStack = storage.getTarget();
+            CustomStack stack = new CustomStack(itemStack);
+            stack.setCustomData(key, value);
         }
         
         return itemStack; //Finally, return itemStack
@@ -75,8 +75,10 @@ public class StackTool {
      * 
      * @param stack
      * @return is stack custom item
-     * @throws NullItemException 
+     * @throws NullItemException
+     * @deprecated
      */
+    @Deprecated
     public static boolean isStackCustom(ItemStack itemStack) 
             throws NullItemException {
         if ( itemStack == null ) { //Null stack test
@@ -100,7 +102,9 @@ public class StackTool {
      * @param value
      * @return new ItemStack with custom data
      * @throws NullItemException 
+     * @deprecated
      */
+    @Deprecated
     public static ItemStack setCustomData(ItemStack itemStack, 
             UUID key, String value) throws NullItemException {
         if ( itemStack == null ) { //Null stack test
@@ -118,7 +122,9 @@ public class StackTool {
      * @param key
      * @return custom data value, null if it doesn't exist
      * @throws NullItemException 
+     * @deprecated
      */
+    @Deprecated
     public static String getCustomData(ItemStack itemStack, UUID key) 
             throws NullItemException {
         if ( itemStack == null ) { //Null stack test
@@ -134,7 +140,9 @@ public class StackTool {
      * @param itemStack
      * @return codeName of item
      * @throws NullItemException
+     * @deprecated
      */
+    @Deprecated
     public static String getCodeName(ItemStack itemStack) throws NullItemException {
         return getCustomData(itemStack, ItemAPIData.CODENAME);
     }

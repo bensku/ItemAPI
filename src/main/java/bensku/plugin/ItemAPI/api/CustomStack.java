@@ -25,7 +25,7 @@ import bensku.plugin.ItemAPI.util.Durability;
  * Better api for modifying ItemStacks from CustomItems
  * @author bensku
  * @since 2.00
- * @since 2.03 - rewrote, API recreated
+ * @since 2.03 - rewrote, API break
  *
  */
 public class CustomStack {
@@ -58,7 +58,7 @@ public class CustomStack {
      * @param value
      * @throws NullItemException 
      */
-    public void setCustomData(Object key, String value) {
+    public void setCustomData(Object key, Object value) {
         this.data.setData(key, value);
     }
     
