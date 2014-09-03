@@ -1,6 +1,7 @@
 name: ItemAPI
 main: bensku.plugin.ItemAPI.main.ItemAPI
 version: 2.02
+soft-depend: [ProtocolLib]
 commands:
    testitem:
       description: Gives ItemAPI test wand

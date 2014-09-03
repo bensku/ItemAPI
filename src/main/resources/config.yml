@@ -1,0 +1,15 @@
+#ItemAPI's main config file. Read the comments before editing, as you may
+#otherwise destroy your custom items.
+
+#NBT library, which is used if needed. Only NBTFActory is working at now, ProtocolLib
+#support coming soon
+nbt-lib: NBTFactory
+data-save:
+    #Data save handler, which is registered to DataManager. Valid values from ItemAPI are
+    #AttributeHandler (recommended) and LoreHandler (don't use, it's WIP)
+    handler: AttributeHandler
+    #Handler parameters
+    parameters:
+        #Is plugins able to use plain text keys instead of UUIDs (recommended: true)
+        #This feature is done by UUID caching (see uuidcache.yml)
+        uuid-caching: true

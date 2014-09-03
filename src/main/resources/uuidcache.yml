@@ -1,0 +1,7 @@
+#This file contains ItemAPIs UUID cache, which allows developers to use plain text
+#instead of UUIDs as keys to save data to items.
+#If you have moved a new world folder, which contains this file, ItemAPI automatically
+#tries to merge its contents to main file in plugin folder. After that, the old file
+#in world folder will OVERWRITTEN.
+
+#DO NOT EDIT! It will definitely break all your custom items.

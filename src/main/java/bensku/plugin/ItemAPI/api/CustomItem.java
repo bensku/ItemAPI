@@ -22,7 +22,6 @@ import bensku.plugin.ItemAPI.api.event.ActiveEvent;
 import bensku.plugin.ItemAPI.api.event.EventType;
 import bensku.plugin.ItemAPI.api.event.PassiveEvent;
 import bensku.plugin.ItemAPI.exception.EventNotHandledException;
-import bensku.plugin.ItemAPI.exception.NullItemException;
 import bensku.plugin.ItemAPI.main.StackTool;
 import bensku.plugin.ItemAPI.util.ColorTags;
 import bensku.plugin.ItemAPI.util.Durability;

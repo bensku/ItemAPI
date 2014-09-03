@@ -1,53 +1,42 @@
 package bensku.plugin.ItemAPI.api;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.inventory.meta.FireworkEffectMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import bensku.plugin.ItemAPI.exception.ItemNotFoundException;
 import bensku.plugin.ItemAPI.exception.NullItemException;
+import bensku.plugin.ItemAPI.itemData.ItemData;
 import bensku.plugin.ItemAPI.main.ItemRegistry;
 import bensku.plugin.ItemAPI.main.StackTool;
+import bensku.plugin.ItemAPI.meta.firework.ExplosionType;
+import bensku.plugin.ItemAPI.nbt.ItemCompound;
 import bensku.plugin.ItemAPI.util.Durability;
 
 /**
  * Better api for modifying ItemStacks from CustomItems
  * @author bensku
  * @since 2.00
+ * @since 2.03 - rewrote, API recreated
  *
  */
 public class CustomStack {
-    private ItemStack itemStack;
+    private ItemStack handle;
+    private ItemCompound nbt;
+    private ItemData data;
     
-    public CustomStack(ItemStack itemStack) throws NullItemException {
-        if ( itemStack != null ) {
-            if ( itemStack.getType() != Material.AIR ) {
-                this.setItemStack(itemStack);
-            } else {
-                throw new NullItemException("Cannot create CustomStack "
-                        + "from AIR itemStack");
-            }
-        } else {
-            throw new NullItemException("Cannot create CustomStack "
-                    + "from null itemStack");
-        }
-    }
-    
-    /**
-     * Sets itemStack
-     * @param itemStack
-     */
-    private void setItemStack(ItemStack itemStack) {
-        this.itemStack = itemStack;
-    }
-    
-    /**
-     * 
-     * @return actual itemStack
-     */
-    public ItemStack getItemStack() {
-        return this.itemStack;
+    public CustomStack(ItemStack stack) {
+        this.handle = stack;
+        this.nbt = new ItemCompound(stack);
+        this.data = new ItemData(stack);
     }
     
     /**
@@ -56,12 +45,7 @@ public class CustomStack {
      * @throws NullItemException 
      */
     public boolean isCustom() {
-        try {
-            return StackTool.isStackCustom(this.getItemStack());
-        } catch (NullItemException e) {
-            e.printStackTrace();
-        }
-        return false;
+        return (data.getData(ItemAPIData.CODENAME) == null) ? false : true;
     }
     
     /**
@@ -70,12 +54,8 @@ public class CustomStack {
      * @param value
      * @throws NullItemException 
      */
-    public void setCustomData(UUID key, String value) {
-        try {
-            this.setItemStack(StackTool.setCustomData(this.itemStack, key, value));
-        } catch (NullItemException e) {
-            e.printStackTrace();
-        }
+    public void setCustomData(Object key, String value) {
+        this.data.setData(key, value);
     }
     
     /**
@@ -84,13 +64,8 @@ public class CustomStack {
      * @return custom data for key
      * @throws NullItemException 
      */
-    public String getCustomData(UUID key) {
-        try {
-            return StackTool.getCustomData(itemStack, key);
-        } catch (NullItemException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public Object getCustomData(Object key) {
+        return this.data.getData(key);
     }
     
     /**
@@ -99,12 +74,7 @@ public class CustomStack {
      * @throws NullItemException
      */
     public String getCodeName() {
-        try {
-            return StackTool.getCodeName(itemStack);
-        } catch (NullItemException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return this.getCustomData(ItemAPIData.CODENAME).toString();
     }
     
     /**
@@ -113,8 +83,8 @@ public class CustomStack {
      * @see Durability
      * @since 2.03 - now returns linked Durability object
      */
-    public Durability getDurability() {
-        return new Durability(this.getItemStack());
+    public Durability getDurabilityUtil() {
+        return new Durability(this.handle);
     }
     
     /**
@@ -143,8 +113,47 @@ public class CustomStack {
             return item;
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
-            //Something wrong happened
+            //Something weird happened
         }
         return null;
+    }
+    
+    public ItemMeta getItemMeta() {
+        return handle.getItemMeta();
+    }
+    
+    public boolean setItemMeta(ItemMeta meta) {
+        this.nbt.set("display.Name", meta.getDisplayName());
+        this.nbt.set("display.Lore", meta.getLore());
+        
+        if ( meta instanceof BookMeta ) {
+            BookMeta casted = (BookMeta) meta;
+            this.nbt.set("author", casted.getAuthor());
+            this.nbt.set("title", casted.getTitle());
+            this.nbt.set("pages", casted.getPages());
+        } else if ( meta instanceof EnchantmentStorageMeta ) {
+            EnchantmentStorageMeta casted = (EnchantmentStorageMeta) meta;
+            this.nbt.set("StoredEnchantments", casted.getStoredEnchants());
+        } else if ( meta instanceof FireworkEffectMeta ) {
+            FireworkEffectMeta casted = (FireworkEffectMeta) meta;
+            FireworkEffect effect = casted.getEffect();
+            
+            this.nbt.set("Explosion.Flicker", effect.hasFlicker());
+            this.nbt.set("Explosion.Trail", effect.hasTrail());
+            this.nbt.set("Explosion.Type", ExplosionType.
+                    fromBukkitType(effect.getType()).getNbtValue());
+            List<Integer> colors = new ArrayList<Integer>();
+            for (int i = 0; i < effect.getColors().size(); i++) {
+                colors.add(effect.getColors().get(i).asRGB());
+            }
+            this.nbt.set("Explosion.Colors", colors);
+            List<Integer> fadeColors = new ArrayList<Integer>();
+            for (int i = 0; i < effect.getFadeColors().size(); i++) {
+                colors.add(effect.getFadeColors().get(i).asRGB());
+            }
+            this.nbt.set("Explosion.FadeColors", fadeColors);
+        }
+        
+        return true;
     }
 }

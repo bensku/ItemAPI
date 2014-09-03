@@ -7,14 +7,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import bensku.plugin.ItemAPI.crafting.CraftEventListener;
 import bensku.plugin.ItemAPI.crafting.CustomRecipe;
 import bensku.plugin.ItemAPI.crafting.Ingredient;
 import bensku.plugin.ItemAPI.crafting.RecipeRegistry;
+import bensku.plugin.ItemAPI.itemData.DataManager;
+import bensku.plugin.ItemAPI.itemData.UUIDCache;
+import bensku.plugin.ItemAPI.listener.CraftEventListener;
 import bensku.plugin.ItemAPI.listener.CustomItemListener;
 import bensku.plugin.ItemAPI.test.TestWand;
 
 public final class ItemAPI extends JavaPlugin {
+    private static ItemAPI api;
+    private DataManager dataManager;
+    private UUIDCache uuidCache;
+    private Config config;
+    
     @EventHandler
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("testitem")) {
@@ -47,6 +54,11 @@ public final class ItemAPI extends JavaPlugin {
                 this);
         getServer().getPluginManager().registerEvents(new CraftEventListener(), this);
         
+        this.dataManager = new DataManager(this);
+        this.uuidCache = new UUIDCache(this);
+        this.config = new Config(this);
+        api = this;
+        
         //Tests
         ItemRegistry.registerCustomItem(TestWand.class);
         
@@ -56,7 +68,27 @@ public final class ItemAPI extends JavaPlugin {
         RecipeRegistry.registerRecipe(recipe);
     }
  
-    public void onDisable(){
+    public void onDisable() {
         
+    }
+    
+    /**
+     * Returns ItemAPI main object.
+     * @return
+     */
+    public static ItemAPI getAPI() {
+        return api;
+    }
+    
+    public DataManager getDataManager() {
+        return this.dataManager;
+    }
+    
+    public UUIDCache getUUIDCache() {
+        return this.uuidCache;
+    }
+    
+    public Config getConfig() {
+        return config;
     }
 }
